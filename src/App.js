@@ -1,3 +1,9 @@
+import Badge from "./components/ui/Badge.js";
+import Button from "./components/ui/Button.js";
+import CheckBox from "./components/ui/CheckBox.js";
+import Icon from "./components/ui/Icon.js";
+import Input from "./components/ui/Input.js";
+
 export default function App() {
   this.state = {}; // todo state 초기화
 
@@ -13,13 +19,38 @@ export default function App() {
   this.render = () => {
     const $root = document.getElementById("app");
     const $main = document.createElement("main");
-    const $button = document.createElement("button");
-    $button.textContent = "button test";
-    $button.addEventListener("click", () => {
-      alert("button clicked");
+    const $button = new Button({
+      text: "button test",
+      onClick: () => alert("button clicked"),
+      isPending: false,
     });
 
     $main.appendChild($button);
+
+    const $input = new Input({
+      value: "custom input",
+      placeholder: "input test",
+      onChange: (e) => console.log(e.target.value),
+    });
+    $main.appendChild($input);
+
+    const $checkbox = new CheckBox({
+      isChecked: true,
+      onChange: (value) => console.log(value),
+      value: "this is checkbox",
+      name: "checkbox name",
+    });
+
+    $main.appendChild($checkbox);
+
+    // SVG 아이콘 렌더링 (img 태그 사용)
+    ["delete", "check", "calendar", "filter", "add"].forEach((variant) => {
+      $main.appendChild(new Icon({ variant, size: "28px" }));
+    });
+
+    ["HIGH", "MEDIUM", "LOW"].forEach((text) => {
+      $main.appendChild(new Badge({ text }));
+    });
 
     $root.appendChild($main);
   };
