@@ -10,12 +10,27 @@
   transition: var(--transition);
   cursor: pointer;
   border: 1px solid transparent;
-  background-color: var(--primary);
-  color: white;
 }
 
-.btn:hover {
+/* fill variant */
+.btn[data-variant="fill"] {
+  background-color: var(--primary);
+  color: white;
+  border: 1px solid transparent;
+}
+.btn[data-variant="fill"]:hover {
   background-color: var(--primary-hover);
+}
+
+/* outline variant */
+.btn[data-variant="outline"] {
+  background-color: white;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+.btn[data-variant="outline"]:hover {
+  background-color: var(--primary);
+  color: white;
 }
 
 .btn:focus {

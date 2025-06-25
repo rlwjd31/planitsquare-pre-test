@@ -161,6 +161,7 @@ table {
 #app {
   width: 100dvw;
   height: 100dvh;
+  padding: 0 2rem;
   container-type: inline-size;
 }
 
