@@ -19,17 +19,17 @@ export default function App() {
   this.render = () => {
     const $root = document.getElementById("app");
     const $main = document.createElement("main");
-    const $button = new Button({
-      text: "button test",
-      onClick: () => alert("button clicked"),
-      isPending: false,
+
+    // add header
+    $main.appendChild(new Header());
+
     });
 
     $main.appendChild($button);
 
     const $input = new Input({
       value: "custom input",
-      placeholder: "input test",
+      onClick: () => alert("add todo button clicked"),
       onChange: (e) => console.log(e.target.value),
     });
     $main.appendChild($input);
