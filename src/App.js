@@ -1,8 +1,5 @@
-import Badge from "./components/ui/Badge.js";
-import Button from "./components/ui/Button.js";
-import CheckBox from "./components/ui/CheckBox.js";
-import Icon from "./components/ui/Icon.js";
-import Input from "./components/ui/Input.js";
+import Header from "./components/layouts/Header.js";
+import ButtonIcon from "./components/ui/ButtonIcon.js";
 
 export default function App() {
   this.state = {}; // todo state 초기화
@@ -23,34 +20,25 @@ export default function App() {
     // add header
     $main.appendChild(new Header());
 
-    });
-
-    $main.appendChild($button);
-
-    const $input = new Input({
-      value: "custom input",
+    // add todo & filter
+    const $addTodoButtonIcon = new ButtonIcon({
+      buttonVariant: "fill",
+      iconVariant: "add",
+      iconSize: "24px",
+      text: "Add Todo",
       onClick: () => alert("add todo button clicked"),
-      onChange: (e) => console.log(e.target.value),
-    });
-    $main.appendChild($input);
-
-    const $checkbox = new CheckBox({
-      isChecked: true,
-      onChange: (value) => console.log(value),
-      value: "this is checkbox",
-      name: "checkbox name",
     });
 
-    $main.appendChild($checkbox);
-
-    // SVG 아이콘 렌더링 (img 태그 사용)
-    ["delete", "check", "calendar", "filter", "add"].forEach((variant) => {
-      $main.appendChild(new Icon({ variant, size: "28px" }));
+    const $filterTodoButtonIcon = new ButtonIcon({
+      buttonVariant: "outline",
+      iconVariant: "filter",
+      iconSize: "24px",
+      text: "Filters",
+      onClick: () => alert("add todo button clicked"),
     });
 
-    ["HIGH", "MEDIUM", "LOW"].forEach((text) => {
-      $main.appendChild(new Badge({ text }));
-    });
+    $main.appendChild($addTodoButtonIcon);
+    $main.appendChild($filterTodoButtonIcon);
 
     $root.appendChild($main);
   };
