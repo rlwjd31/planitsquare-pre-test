@@ -28,9 +28,9 @@
   color: var(--primary);
   border: 1.5px solid var(--primary);
 }
+
 .btn[data-variant="outline"]:hover {
-  background-color: var(--primary);
-  color: white;
+  background-color: var(--background-muted);
 }
 
 .btn:focus {
