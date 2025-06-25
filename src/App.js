@@ -1,4 +1,5 @@
 import Button from "./components/ui/Button.js";
+import CheckBox from "./components/ui/CheckBox.js";
 import Input from "./components/ui/Input.js";
 
 export default function App() {
@@ -30,6 +31,15 @@ export default function App() {
       onChange: (e) => console.log(e.target.value),
     });
     $main.appendChild($input);
+
+    const $checkbox = new CheckBox({
+      isChecked: false,
+      onChange: (value) => console.log(value),
+      value: "this is checkbox",
+      name: "checkbox name",
+    });
+
+    $main.appendChild($checkbox);
 
     $root.appendChild($main);
   };
