@@ -20,7 +20,10 @@ export default function App() {
     // add header
     $main.appendChild(new Header());
 
-    // add todo & filter
+    // add todo & filter(todo control panel)
+    const $container = document.createElement("div");
+    $container.className = "todo-control-panel";
+
     const $addTodoButtonIcon = new ButtonIcon({
       buttonVariant: "fill",
       iconVariant: "add",
@@ -37,8 +40,10 @@ export default function App() {
       onClick: () => alert("add todo button clicked"),
     });
 
-    $main.appendChild($addTodoButtonIcon);
-    $main.appendChild($filterTodoButtonIcon);
+    $container.appendChild($addTodoButtonIcon);
+    $container.appendChild($filterTodoButtonIcon);
+
+    $main.appendChild($container);
 
     $root.appendChild($main);
   };
