@@ -1,3 +1,5 @@
+import Button from "./components/ui/Button.js";
+
 export default function App() {
   this.state = {}; // todo state 초기화
 
@@ -13,10 +15,10 @@ export default function App() {
   this.render = () => {
     const $root = document.getElementById("app");
     const $main = document.createElement("main");
-    const $button = document.createElement("button");
-    $button.textContent = "button test";
-    $button.addEventListener("click", () => {
-      alert("button clicked");
+    const $button = new Button({
+      text: "button test",
+      onClick: () => alert("button clicked"),
+      isPending: false,
     });
 
     $main.appendChild($button);
