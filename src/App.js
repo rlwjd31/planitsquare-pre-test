@@ -1,4 +1,5 @@
 import Button from "./components/ui/Button.js";
+import Input from "./components/ui/Input.js";
 
 export default function App() {
   this.state = {}; // todo state 초기화
@@ -22,6 +23,13 @@ export default function App() {
     });
 
     $main.appendChild($button);
+
+    const $input = new Input({
+      value: "custom input",
+      placeholder: "input test",
+      onChange: (e) => console.log(e.target.value),
+    });
+    $main.appendChild($input);
 
     $root.appendChild($main);
   };
