@@ -1,5 +1,6 @@
 import Button from "./components/ui/Button.js";
 import CheckBox from "./components/ui/CheckBox.js";
+import Icon from "./components/ui/Icon.js";
 import Input from "./components/ui/Input.js";
 
 export default function App() {
@@ -33,13 +34,18 @@ export default function App() {
     $main.appendChild($input);
 
     const $checkbox = new CheckBox({
-      isChecked: false,
+      isChecked: true,
       onChange: (value) => console.log(value),
       value: "this is checkbox",
       name: "checkbox name",
     });
 
     $main.appendChild($checkbox);
+
+    // SVG 아이콘 렌더링 (img 태그 사용)
+    ["delete", "check", "calendar", "filter", "add"].forEach((variant) => {
+      $main.appendChild(new Icon({ variant, size: "28px" }));
+    });
 
     $root.appendChild($main);
   };
