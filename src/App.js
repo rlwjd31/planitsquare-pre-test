@@ -1,3 +1,4 @@
+import Badge from "./components/ui/Badge.js";
 import Button from "./components/ui/Button.js";
 import CheckBox from "./components/ui/CheckBox.js";
 import Icon from "./components/ui/Icon.js";
@@ -45,6 +46,10 @@ export default function App() {
     // SVG 아이콘 렌더링 (img 태그 사용)
     ["delete", "check", "calendar", "filter", "add"].forEach((variant) => {
       $main.appendChild(new Icon({ variant, size: "28px" }));
+    });
+
+    ["HIGH", "MEDIUM", "LOW"].forEach((text) => {
+      $main.appendChild(new Badge({ text }));
     });
 
     $root.appendChild($main);

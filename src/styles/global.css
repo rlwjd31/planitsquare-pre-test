@@ -143,6 +143,11 @@ table {
   --background: #ffffff;
   --background-muted: #f9fafb;
 
+  /* Priority Colors */
+  --priority-high: #ef4444; /* 빨간색 계열 - 높음 */
+  --priority-medium: #10b981; /* 초록색 계열 - 낮음 */
+  --priority-low: #f59e0b; /* 주황색 계열 - 보통 */
+
   /* Border radius */
   --radius: 0.375rem;
 
