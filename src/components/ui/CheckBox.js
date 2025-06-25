@@ -1,3 +1,5 @@
+import Icon from "./Icon.js";
+
 /**
  * 체크박스 컴포넌트
  * @param {Object} props
@@ -16,6 +18,7 @@ export default function CheckBox({
 }) {
   this.$checkbox = document.createElement("input");
   this.$wrapper = document.createElement("div");
+  this.$checkIcon = new Icon({ variant: "check", size: "20px" });
 
   this.render = () => {
     // 숨김처리한 실제 checkbox
@@ -46,7 +49,7 @@ export default function CheckBox({
     );
 
     this.$wrapper.appendChild(this.$checkbox);
-
+    this.$wrapper.appendChild(this.$checkIcon);
   };
 
   this.render();
