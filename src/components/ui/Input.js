@@ -7,7 +7,12 @@
  * @param {(event: InputEvent) => void} props.onChange input의 event handler
  * @returns {HTMLInputElement}
  */
-export default function Input({ value, placeholder, readOnly, onChange }) {
+export default function Input({
+  value = "",
+  placeholder = "todo 입력",
+  readOnly,
+  onChange,
+}) {
   this.$input = document.createElement("input");
 
   this.state = {};
