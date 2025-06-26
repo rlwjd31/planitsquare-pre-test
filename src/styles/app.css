@@ -21,3 +21,13 @@
   gap: 1rem;
   align-self: flex-start;
 }
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+}

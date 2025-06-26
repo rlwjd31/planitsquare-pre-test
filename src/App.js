@@ -3,9 +3,11 @@ import ButtonIcon from "./components/ui/ButtonIcon.js";
 import Card from "./components/ui/Card.js";
 import Input from "./components/ui/Input.js";
 import Button from "./components/ui/Button.js";
+import Todo from "./components/todo.js";
+import { todos as mockTodos } from "./mock/todos.js";
 
 export default function App() {
-  this.state = {}; // todo state 초기화
+  this.state = { todos: mockTodos };
 
   this.init = () => {
     // TODO: 나중에 state persistence기능 구현하기
@@ -27,18 +29,26 @@ export default function App() {
     const $todoControlPanel = new TodoControlPanel();
     $main.appendChild($todoControlPanel);
 
-    
+    // todo 리스트 렌더링
+    const $todoList = document.createElement("div");
+    $todoList.className = "todo-list";
+    this.state.todos.forEach((todo) => {
+      $todoList.appendChild(new Todo({ todo }));
+    });
+    $main.appendChild($todoList);
 
+    // app에 append
     $root.appendChild($main);
   };
 
   this.init();
-  this.setState({});
+  this.setState(this.state);
   // this.render(); 👉🏻 setState에서 한 번 rendering이 되므로 주석처리
 
   return document.createElement("div");
 }
 
+// todo control panel => todo 추가, 필터링 버튼
 function TodoControlPanel() {
   const $container = document.createElement("div");
   $container.className = "todo-control-panel";
