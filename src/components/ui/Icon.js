@@ -5,12 +5,13 @@ const iconMap = {
   filter: "./src/assets/filter.svg",
   add: "./src/assets/add.svg",
   link: "./src/assets/link.svg",
+  pencil: "./src/assets/pencil.svg",
 };
 
 /**
  * 아이콘 컴포넌트
  * @param {Object} props
- * @param {'delete' | 'check' | 'calendar' | 'filter' | 'add' | 'link'} props.variant - 아이콘 종류
+ * @param {'delete' | 'check' | 'calendar' | 'filter' | 'add' | 'link' | 'pencil'} props.variant - 아이콘 종류
  * @param {string} props.size - 아이콘 크기 (e.g. '24px', '1rem')
  * @returns {HTMLImageElement}
  */

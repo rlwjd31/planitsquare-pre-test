@@ -1,4 +1,5 @@
 import Badge from "./ui/Badge.js";
+import ButtonIcon from "./ui/ButtonIcon.js";
 import Card from "./ui/Card.js";
 import Checkbox from "./ui/Checkbox.js";
 import Icon from "./ui/Icon.js";
@@ -98,8 +99,38 @@ export default function Todo({ todo, toggleTodoStatus }) {
 
   $metaWrapper.appendChild($statusBadge);
   $metaWrapper.appendChild($priorityBadge);
-
   $todoContainer.appendChild($metaWrapper);
+
+  // 변경, 삭제를 위한 icon(delete, pencil)
+  const $iconWrapper = document.createElement("div");
+  $iconWrapper.className = "icon-wrapper";
+  const $deleteButtonIcon = new ButtonIcon({
+    buttonVariant: "outline",
+    iconSize: "24px",
+    iconVariant: "delete",
+    onClick: () => {
+      console.log("delete icon button clicked");
+    },
+    text: "",
+  });
+  $deleteButtonIcon.classList.add("delete-btn-icon");
+  const $editButtonIcon = new ButtonIcon({
+    buttonVariant: "outline",
+    iconSize: "24px",
+    iconVariant: "pencil",
+    onClick: () => {
+      console.log("pencil icon button clicked");
+    },
+    text: "",
+  });
+  $editButtonIcon.classList.add("edit-btn-icon");
+  $iconWrapper.appendChild($deleteButtonIcon);
+  
+  if (status === "TODO") {
+    $iconWrapper.appendChild($editButtonIcon);
+  }
+  
+  $todoContainer.appendChild($iconWrapper);
 
   return new Card({ children: [$todoContainer], status });
 }

@@ -1,4 +1,5 @@
 .todo-container {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -70,4 +71,47 @@
   gap: 0.365rem;
   display: flex;
   padding-left: var(--todo-padding-left);
+}
+
+/* 아이콘 래퍼를 오른쪽 하단에 고정 배치 */
+.icon-wrapper {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.icon-wrapper .btn-icon {
+  padding: 0.5rem;
+  border: none;
+}
+
+.icon-wrapper .btn-icon {
+  padding: 0.5rem;
+  border: none;
+}
+
+.icon-wrapper .delete-btn-icon {
+  border: 1px solid var(--priority-high);
+  transition: border 0.2s ease-in-out;
+}
+
+.icon-wrapper .delete-btn-icon:hover {
+  border: 1px solid var(--priority-high);
+  background-color: color-mix(in srgb, var(--priority-high) 30%, transparent);
+}
+
+.icon-wrapper .edit-btn-icon {
+  border: 1px solid var(--text-muted);
+}
+
+.icon-wrapper .edit-btn-icon:hover {
+  border: 1px solid var(--text-muted);
+  background-color: color-mix(in srgb, var(--text-muted) 30%, transparent);
+}
+
+.icon-wrapper .btn-icon:focus {
+  border: none;
 }
