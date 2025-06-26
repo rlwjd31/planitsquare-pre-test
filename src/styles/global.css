@@ -158,9 +158,9 @@ a:hover {
   --priority-low: #7df9b5; /* 주황색 계열 - 보통 */
 
   /* status colors */
-  --status-todo: #3b82f6;
+  --status-todo: var(--primary); /* 할일 상태 */
   --status-hold: #ef4444;
-  --status-done: #9ca3af;
+  --status-done: var(--text-muted);
 
   /* Border radius */
   --radius: 0.375rem;

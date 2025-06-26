@@ -5,7 +5,7 @@
  * @returns {HTMLDivElement}
  */
 export default function Card({ children }) {
-  this.$card = document.createElement("div");
+  this.$card = document.createElement("article");
   this.$card.className = "card";
 
   if (Array.isArray(children)) {

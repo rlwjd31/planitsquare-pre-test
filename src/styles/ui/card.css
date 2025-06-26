@@ -1,10 +1,10 @@
 .card {
+  position: relative;
   background: #fff;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
   box-shadow: 0 1px 4px 0 rgba(31, 41, 55, 0.04);
   padding: 1.25rem 1.5rem;
-  margin-bottom: 1.25rem;
   transition: box-shadow 0.2s var(--transition),
     border-color 0.2s var(--transition), transform 0.15s var(--transition);
   display: flex;

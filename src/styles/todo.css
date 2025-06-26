@@ -1,0 +1,72 @@
+.todo-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.todo-title-wrapper .todo-title {
+  /* checkbox와 가운데가 일치하지 않아 현재 기준으로 아래 2px조정 함 */
+  position: relative;
+  top: 2px;
+  /*  */
+
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.todo-description {
+  margin-top: 1rem;
+  padding-left: var(--todo-padding-left);
+  line-height: 1.5;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.todo-info-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: var(--todo-padding-left);
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+  gap: 1rem;
+  min-width: 0;
+}
+
+.todo-info-wrapper .todo-date-wrapper,
+.todo-info-wrapper .todo-url-wrapper {
+  display: flex;
+  gap: 0.365rem;
+  align-items: center;
+}
+
+.todo-info-wrapper span,
+.todo-info-wrapper a {
+  position: relative;
+  top: 2px;
+}
+
+.todo-info-wrapper a {
+  max-width: 200px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.todo-meta-wrapper {
+  margin-top: 1.5rem;
+  gap: 0.365rem;
+  display: flex;
+  padding-left: var(--todo-padding-left);
+}

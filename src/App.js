@@ -1,10 +1,8 @@
 import Header from "./components/layouts/Header.js";
 import ButtonIcon from "./components/ui/ButtonIcon.js";
-import Card from "./components/ui/Card.js";
-import Input from "./components/ui/Input.js";
-import Button from "./components/ui/Button.js";
 import Todo from "./components/todo.js";
 import { todos as mockTodos } from "./mock/todos.js";
+import CheckBox from "./components/ui/Checkbox.js";
 
 export default function App() {
   this.state = { todos: mockTodos };

@@ -7,7 +7,6 @@
  * @property {{ start: Date, end: Date }} period - todo를 끝내야 할 기간
  * @property {string} relatedLink - todo와 관련된 링크
  * @property {'HIGH' | 'MEDIUM' | 'LOW'} priority - 우선순위 (높음: red, 중간: green, 낮음: yellow/orange)
- * @property {Date} createdAt - 생성일 (sort 기능)
  */
 
 // TODO 타입에 맞는 mock 데이터 10개
@@ -21,7 +20,6 @@ export const todos = [
     period: { start: new Date("2024-06-01"), end: new Date("2024-06-03") },
     relatedLink: "https://www.naver.com",
     priority: "HIGH",
-    createdAt: new Date("2024-05-30"),
   },
   {
     id: "2",
@@ -31,7 +29,6 @@ export const todos = [
     period: { start: new Date("2024-06-02"), end: new Date("2024-06-10") },
     relatedLink: "https://www.google.com",
     priority: "MEDIUM",
-    createdAt: new Date("2024-05-28"),
   },
   {
     id: "3",
@@ -41,7 +38,6 @@ export const todos = [
     period: { start: new Date("2024-06-01"), end: new Date("2024-06-02") },
     relatedLink: "https://github.com",
     priority: "HIGH",
-    createdAt: new Date("2024-05-29"),
   },
   {
     id: "4",
@@ -51,7 +47,6 @@ export const todos = [
     period: { start: new Date("2024-05-25"), end: new Date("2024-05-27") },
     relatedLink: "https://react.dev",
     priority: "LOW",
-    createdAt: new Date("2024-05-25"),
   },
   {
     id: "5",
@@ -61,7 +56,6 @@ export const todos = [
     period: { start: new Date("2024-06-05"), end: new Date("2024-06-15") },
     relatedLink: "https://www.figma.com",
     priority: "MEDIUM",
-    createdAt: new Date("2024-05-31"),
   },
   {
     id: "6",
@@ -71,7 +65,6 @@ export const todos = [
     period: { start: new Date("2024-06-03"), end: new Date("2024-06-07") },
     relatedLink: "https://developer.mozilla.org",
     priority: "LOW",
-    createdAt: new Date("2024-05-30"),
   },
   {
     id: "7",
@@ -81,7 +74,6 @@ export const todos = [
     period: { start: new Date("2024-05-20"), end: new Date("2024-05-31") },
     relatedLink: "https://www.kakaocorp.com",
     priority: "HIGH",
-    createdAt: new Date("2024-05-20"),
   },
   {
     id: "8",
@@ -91,7 +83,6 @@ export const todos = [
     period: { start: new Date("2024-06-04"), end: new Date("2024-06-04") },
     relatedLink: "https://zoom.us",
     priority: "MEDIUM",
-    createdAt: new Date("2024-06-01"),
   },
   {
     id: "9",
@@ -101,7 +92,6 @@ export const todos = [
     period: { start: new Date("2024-06-06"), end: new Date("2024-06-09") },
     relatedLink: "https://tinypng.com",
     priority: "LOW",
-    createdAt: new Date("2024-06-02"),
   },
   {
     id: "10",
@@ -111,6 +101,5 @@ export const todos = [
     period: { start: new Date("2024-06-02"), end: new Date("2024-06-03") },
     relatedLink: "https://github.com/pulls",
     priority: "HIGH",
-    createdAt: new Date("2024-06-01"),
   },
 ];
