@@ -46,7 +46,9 @@ export default function ButtonIcon({
     );
 
     this.$buttonIcon.appendChild(this.$icon);
-    this.$buttonIcon.appendChild(this.$text);
+    if (text) {
+      this.$buttonIcon.appendChild(this.$text);
+    }
   };
 
   this.render();
