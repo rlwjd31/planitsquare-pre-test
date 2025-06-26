@@ -29,7 +29,7 @@ export default function CheckBox({
     this.$checkbox.value = value;
     this.$checkbox.readOnly = readOnly;
     this.$checkbox.onchange = (e) => {
-      console.log(e.target.checked, e.target.value);
+      e.stopPropagation();
       onChange(e.target.value);
 
       // wrapper는 checkbox의 상위 요소로 선택할 방법이 없어 data attribute로 체크를 주어 style을 적용함

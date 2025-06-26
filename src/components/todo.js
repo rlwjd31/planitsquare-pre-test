@@ -33,9 +33,7 @@ export default function Todo({ todo, toggleTodoStatus }) {
   $titleWrapper.className = "todo-title-wrapper";
   const $checkbox = new Checkbox({
     value: id,
-    onChange: (value) => {
-      console.log("상위에서", value);
-    },
+    onChange: toggleTodoStatus,
     isChecked: status === "DONE",
     name: "todo",
     readOnly: status === "DONE",
@@ -43,10 +41,7 @@ export default function Todo({ todo, toggleTodoStatus }) {
   const $title = document.createElement("span");
   $title.className = "todo-title";
   $title.textContent = title;
-  $title.addEventListener("click", () => {
-    console.log("title clicked");
-    toggleTodoStatus(id);
-  });
+  $title.addEventListener("click", () => toggleTodoStatus(id));
 
   $titleWrapper.appendChild($checkbox);
   $titleWrapper.appendChild($title);
