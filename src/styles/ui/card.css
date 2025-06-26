@@ -18,3 +18,17 @@
   border-color: var(--primary);
   transform: translateY(-2px) scale(1.01);
 }
+
+/* todo status done일 때 스타일 */
+.card-done {
+  opacity: 0.6;
+  filter: grayscale(0.15);
+  border-color: var(--status-done);
+  background: #f6faf7;
+}
+
+/* todo status todo일 때 스타일 */
+.card-todo {
+  border-color: var(--status-todo);
+  background: #f8faff;
+}

@@ -101,5 +101,5 @@ export default function Todo({ todo, toggleTodoStatus }) {
 
   $todoContainer.appendChild($metaWrapper);
 
-  return new Card({ children: [$todoContainer] });
+  return new Card({ children: [$todoContainer], status });
 }
