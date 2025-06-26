@@ -8,7 +8,7 @@ import Icon from "./ui/Icon.js";
  * @param {{
  *   id: string;
  *   title: string;
- *   status: 'HOLD' | 'DONE' | 'TODO';
+ *   status: 'DONE' | 'TODO';
  *   description: string;
  *   period: {
  *     start: Date;
@@ -18,9 +18,13 @@ import Icon from "./ui/Icon.js";
  *   priority: 'HIGH' | 'MEDIUM' | 'LOW';
  *   createdAt: Date;
  * }} props.todo
+ * @param {(todoId: string) => void} props.toggleTodoStatus - todo의 상태를 토글하는 함수
  * @returns {HTMLDivElement}
  */
-export default function Todo({ todo }) {
+export default function Todo({ todo, toggleTodoStatus }) {
+  const { id, title, status, description, period, relatedLink, priority } =
+    todo;
+
   const $todoContainer = document.createElement("div");
   $todoContainer.className = "todo-container";
 
@@ -28,17 +32,21 @@ export default function Todo({ todo }) {
   const $titleWrapper = document.createElement("div");
   $titleWrapper.className = "todo-title-wrapper";
   const $checkbox = new Checkbox({
-    value: todo.id,
+    value: id,
     onChange: (value) => {
       console.log("상위에서", value);
     },
-    isChecked: todo.status === "DONE",
+    isChecked: status === "DONE",
     name: "todo",
-    readOnly: todo.status === "DONE",
+    readOnly: status === "DONE",
   });
   const $title = document.createElement("span");
   $title.className = "todo-title";
-  $title.textContent = todo.title;
+  $title.textContent = title;
+  $title.addEventListener("click", () => {
+    console.log("title clicked");
+    toggleTodoStatus(id);
+  });
 
   $titleWrapper.appendChild($checkbox);
   $titleWrapper.appendChild($title);
@@ -47,7 +55,7 @@ export default function Todo({ todo }) {
   // todo description section
   const $description = document.createElement("p");
   $description.className = "todo-description";
-  $description.textContent = todo.description;
+  $description.textContent = description;
   $todoContainer.appendChild($description);
 
   // todo info section
@@ -61,7 +69,7 @@ export default function Todo({ todo }) {
   });
   const $period = document.createElement("span");
   // TODO: date parse util 함수로 빼기
-  const [start, end] = Object.values(todo.period).map((date) =>
+  const [start, end] = Object.values(period).map((date) =>
     date.toLocaleDateString("ko-KR", {
       month: "short",
       day: "numeric",
@@ -75,8 +83,8 @@ export default function Todo({ todo }) {
   $urlWrapper.className = "todo-url-wrapper";
   const $linkIcon = new Icon({ variant: "link", size: "20px" });
   const $urlLink = document.createElement("a");
-  $urlLink.href = todo.relatedLink;
-  $urlLink.textContent = todo.relatedLink;
+  $urlLink.href = relatedLink;
+  $urlLink.textContent = relatedLink;
   $urlLink.target = "_blank";
   $urlLink.addEventListener("click", (e) => e.stopPropagation());
   $urlWrapper.appendChild($linkIcon);
@@ -90,15 +98,13 @@ export default function Todo({ todo }) {
   // todo meta section => 우선순위, 상태
   const $metaWrapper = document.createElement("div");
   $metaWrapper.className = "todo-meta-wrapper";
-  const $statusBadge = new Badge({ text: todo.status });
-  const $priorityBadge = new Badge({ text: todo.priority });
+  const $statusBadge = new Badge({ text: status });
+  const $priorityBadge = new Badge({ text: priority });
 
   $metaWrapper.appendChild($statusBadge);
   $metaWrapper.appendChild($priorityBadge);
 
   $todoContainer.appendChild($metaWrapper);
-
-
 
   return new Card({ children: [$todoContainer] });
 }

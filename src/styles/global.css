@@ -159,7 +159,6 @@ a:hover {
 
   /* status colors */
   --status-todo: var(--primary); /* 할일 상태 */
-  --status-hold: #ef4444;
   --status-done: var(--text-muted);
 
   /* Border radius */

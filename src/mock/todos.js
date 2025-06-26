@@ -2,7 +2,7 @@
  * @typedef {Object} TODO
  * @property {string} id - 고유 id
  * @property {string} title - todo의 제목
- * @property {'HOLD' | 'DONE' | 'TODO'} status - 잠시 멈춤 | 끝냄 | 해야될 일 (sort 기능)
+ * @property {'DONE' | 'TODO'} status - 끝냄 | 해야될 일 (sort 기능)
  * @property {string} description - 추후 tooltip에서 사용하기
  * @property {{ start: Date, end: Date }} period - todo를 끝내야 할 기간
  * @property {string} relatedLink - todo와 관련된 링크
@@ -24,7 +24,7 @@ export const todos = [
   {
     id: "2",
     title: "프로젝트 문서 작성",
-    status: "HOLD",
+    status: "DONE",
     description: "프로젝트의 주요 문서를 초안 작성 및 검토합니다.",
     period: { start: new Date("2024-06-02"), end: new Date("2024-06-10") },
     relatedLink: "https://www.google.com",
@@ -51,7 +51,7 @@ export const todos = [
   {
     id: "5",
     title: "랜딩 페이지 디자인",
-    status: "HOLD",
+    status: "DONE",
     description: "새로운 랜딩 페이지의 와이어프레임을 제작합니다.",
     period: { start: new Date("2024-06-05"), end: new Date("2024-06-15") },
     relatedLink: "https://www.figma.com",
@@ -87,7 +87,7 @@ export const todos = [
   {
     id: "9",
     title: "이미지 에셋 최적화",
-    status: "HOLD",
+    status: "DONE",
     description: "웹사이트의 이미지 파일을 압축 및 최적화합니다.",
     period: { start: new Date("2024-06-06"), end: new Date("2024-06-09") },
     relatedLink: "https://tinypng.com",

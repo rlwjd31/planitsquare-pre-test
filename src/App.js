@@ -2,7 +2,6 @@ import Header from "./components/layouts/Header.js";
 import ButtonIcon from "./components/ui/ButtonIcon.js";
 import Todo from "./components/todo.js";
 import { todos as mockTodos } from "./mock/todos.js";
-import CheckBox from "./components/ui/Checkbox.js";
 
 export default function App() {
   this.state = { todos: mockTodos };
@@ -14,6 +13,21 @@ export default function App() {
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
+  };
+
+  this.toggleTodoStatus = (todoId) => {
+    const updatedTodos = this.state.todos.map((todo) => {
+      if (todo.id === todoId) {
+        return {
+          ...todo,
+          status: todo.status === "DONE" ? "TODO" : "DONE",
+        };
+      }
+      return todo;
+    });
+
+    console.log(updatedTodos);
+    this.setState({ todos: updatedTodos });
   };
 
   this.render = () => {
@@ -31,7 +45,9 @@ export default function App() {
     const $todoList = document.createElement("div");
     $todoList.className = "todo-list";
     this.state.todos.forEach((todo) => {
-      $todoList.appendChild(new Todo({ todo }));
+      $todoList.appendChild(
+        new Todo({ todo, toggleTodoStatus: this.toggleTodoStatus })
+      );
     });
     $main.appendChild($todoList);
 
@@ -42,8 +58,6 @@ export default function App() {
   this.init();
   this.setState(this.state);
   // this.render(); 👉🏻 setState에서 한 번 rendering이 되므로 주석처리
-
-  return document.createElement("div");
 }
 
 // todo control panel => todo 추가, 필터링 버튼
