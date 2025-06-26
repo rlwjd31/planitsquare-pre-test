@@ -30,6 +30,7 @@ export default function App() {
     this.setState({ todos: updatedTodos });
   };
 
+  // @FIXME: todo state가 바뀌어 re-rendering시 새로운 app이 추가 됨.
   this.render = () => {
     const $root = document.getElementById("app");
     const $main = document.createElement("main");
