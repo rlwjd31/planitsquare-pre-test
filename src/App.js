@@ -5,6 +5,7 @@ import { todos as mockTodos } from "./mock/todos.js";
 
 export default function App() {
   this.state = { todos: mockTodos };
+  this.$main = document.createElement("main");
 
   this.init = () => {
     // TODO: 나중에 state persistence기능 구현하기
@@ -26,21 +27,22 @@ export default function App() {
       return todo;
     });
 
-    console.log(updatedTodos);
     this.setState({ todos: updatedTodos });
   };
 
-  // @FIXME: todo state가 바뀌어 re-rendering시 새로운 app이 추가 됨.
   this.render = () => {
+    // 🐛 bug report commit id => 2cf4647
+    // this.$main이 다시 생성되지 않도록 함수의 상단으로 빼고 render함수 내부에서 참조하여 DOM을 지우고 다시 그림.
+    this.$main.innerHTML = "";
+
     const $root = document.getElementById("app");
-    const $main = document.createElement("main");
 
     // add header
-    $main.appendChild(new Header());
+    this.$main.appendChild(new Header());
 
     // add todo & filter(todo control panel)
     const $todoControlPanel = new TodoControlPanel();
-    $main.appendChild($todoControlPanel);
+    this.$main.appendChild($todoControlPanel);
 
     // todo 리스트 렌더링
     const $todoList = document.createElement("div");
@@ -50,10 +52,10 @@ export default function App() {
         new Todo({ todo, toggleTodoStatus: this.toggleTodoStatus })
       );
     });
-    $main.appendChild($todoList);
+    this.$main.appendChild($todoList);
 
     // app에 append
-    $root.appendChild($main);
+    $root.appendChild(this.$main);
   };
 
   this.init();
