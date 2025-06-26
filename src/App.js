@@ -30,6 +30,12 @@ export default function App() {
     this.setState({ todos: updatedTodos });
   };
 
+  this.deleteTodo = (todoId) => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => todo.id !== todoId),
+    });
+  };
+
   this.render = () => {
     // 🐛 bug report commit id => 2cf4647
     // this.$main이 다시 생성되지 않도록 함수의 상단으로 빼고 render함수 내부에서 참조하여 DOM을 지우고 다시 그림.
@@ -49,7 +55,11 @@ export default function App() {
     $todoList.className = "todo-list";
     this.state.todos.forEach((todo) => {
       $todoList.appendChild(
-        new Todo({ todo, toggleTodoStatus: this.toggleTodoStatus })
+        new Todo({
+          todo,
+          toggleTodoStatus: this.toggleTodoStatus,
+          deleteTodo: this.deleteTodo,
+        })
       );
     });
     this.$main.appendChild($todoList);

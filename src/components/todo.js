@@ -20,9 +20,10 @@ import Icon from "./ui/Icon.js";
  *   createdAt: Date;
  * }} props.todo
  * @param {(todoId: string) => void} props.toggleTodoStatus - todo의 상태를 토글하는 함수
+ * @param {(todoId: string) => void} props.deleteTodo - todo를 삭제하는 함수
  * @returns {HTMLDivElement}
  */
-export default function Todo({ todo, toggleTodoStatus }) {
+export default function Todo({ todo, toggleTodoStatus, deleteTodo }) {
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
 
@@ -108,28 +109,12 @@ export default function Todo({ todo, toggleTodoStatus }) {
     buttonVariant: "outline",
     iconSize: "24px",
     iconVariant: "delete",
-    onClick: () => {
-      console.log("delete icon button clicked");
-    },
+    onClick: () => deleteTodo(id),
     text: "",
   });
   $deleteButtonIcon.classList.add("delete-btn-icon");
-  const $editButtonIcon = new ButtonIcon({
-    buttonVariant: "outline",
-    iconSize: "24px",
-    iconVariant: "pencil",
-    onClick: () => {
-      console.log("pencil icon button clicked");
-    },
-    text: "",
-  });
-  $editButtonIcon.classList.add("edit-btn-icon");
   $iconWrapper.appendChild($deleteButtonIcon);
-  
-  if (status === "TODO") {
-    $iconWrapper.appendChild($editButtonIcon);
-  }
-  
+
   $todoContainer.appendChild($iconWrapper);
 
   return new Card({ children: [$todoContainer], status });

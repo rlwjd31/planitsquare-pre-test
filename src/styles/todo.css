@@ -103,14 +103,6 @@
   background-color: color-mix(in srgb, var(--priority-high) 30%, transparent);
 }
 
-.icon-wrapper .edit-btn-icon {
-  border: 1px solid var(--text-muted);
-}
-
-.icon-wrapper .edit-btn-icon:hover {
-  border: 1px solid var(--text-muted);
-  background-color: color-mix(in srgb, var(--text-muted) 30%, transparent);
-}
 
 .icon-wrapper .btn-icon:focus {
   border: none;
