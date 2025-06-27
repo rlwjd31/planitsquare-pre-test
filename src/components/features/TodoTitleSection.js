@@ -24,6 +24,7 @@ export default function TitleSection({
 
   let $titleElement;
   if (isEditMode) {
+    // @FIXME: todo.js의 존재하는 state가 갱신되면서 input의 focus가 풀리는 이슈
     const $editInput = new Input({
       value: title,
       onChange: onChangeTitle,
