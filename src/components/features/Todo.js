@@ -1,9 +1,9 @@
 import Badge from "../ui/Badge.js";
 import ButtonIcon from "../ui/ButtonIcon.js";
 import Card from "../ui/Card.js";
-import Icon from "../ui/Icon.js";
 import TitleSection from "./TodoTitleSection.js";
 import TodoDescription from "./TodoDescription.js";
+import TodoInfoSection from "./TodoInfoSection.js";
 
 /**
  * @param {Object} props
@@ -71,45 +71,13 @@ export default function Todo({
     $todoContainer.appendChild($titleSection);
 
     // todo description section
-    const $description = new TodoDescription({ description });
-    $todoContainer.appendChild($description);
+    const $descriptionSection = new TodoDescription({ description });
+    $todoContainer.appendChild($descriptionSection);
 
     // todo info section
-    const $infoWrapper = document.createElement("div");
-    $infoWrapper.className = "todo-info-wrapper";
-    const $dateWrapper = document.createElement("div");
-    $dateWrapper.className = "todo-date-wrapper";
-    const $calendarIcon = new Icon({
-      variant: "calendar",
-      size: "20px",
-    });
-    const $period = document.createElement("span");
-    // TODO: date parse util 함수로 빼기
-    const [start, end] = Object.values(period).map((date) =>
-      date.toLocaleDateString("ko-KR", {
-        month: "short",
-        day: "numeric",
-      })
-    );
-    $period.textContent = `${start} ~ ${end}`;
-    $dateWrapper.appendChild($calendarIcon);
-    $dateWrapper.appendChild($period);
+    const $infoSection = new TodoInfoSection({ period, relatedLink });
 
-    const $urlWrapper = document.createElement("div");
-    $urlWrapper.className = "todo-url-wrapper";
-    const $linkIcon = new Icon({ variant: "link", size: "20px" });
-    const $urlLink = document.createElement("a");
-    $urlLink.href = relatedLink;
-    $urlLink.textContent = relatedLink;
-    $urlLink.target = "_blank";
-    $urlLink.addEventListener("click", (e) => e.stopPropagation());
-    $urlWrapper.appendChild($linkIcon);
-    $urlWrapper.appendChild($urlLink);
-
-    $infoWrapper.appendChild($dateWrapper);
-    $infoWrapper.appendChild($urlWrapper);
-
-    $todoContainer.appendChild($infoWrapper);
+    $todoContainer.appendChild($infoSection);
 
     // todo meta section => 우선순위, 상태
     const $metaWrapper = document.createElement("div");
