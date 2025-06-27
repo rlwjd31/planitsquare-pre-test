@@ -3,6 +3,7 @@ import ButtonIcon from "./ui/ButtonIcon.js";
 import Card from "./ui/Card.js";
 import Checkbox from "./ui/Checkbox.js";
 import Icon from "./ui/Icon.js";
+import Input from "./ui/Input.js";
 
 /**
  * @param {Object} props
@@ -21,101 +22,162 @@ import Icon from "./ui/Icon.js";
  * }} props.todo
  * @param {(todoId: string) => void} props.toggleTodoStatus - todo의 상태를 토글하는 함수
  * @param {(todoId: string) => void} props.deleteTodo - todo를 삭제하는 함수
+ * @param {(todoId: string, updatedTodo: Partial<Todo>) => void} props.updateTodo - todo를 업데이트하는 함수
  * @returns {HTMLDivElement}
  */
-export default function Todo({ todo, toggleTodoStatus, deleteTodo }) {
+export default function Todo({ todo, toggleTodoStatus, deleteTodo, updateTodo }) {
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
+
+  this.state = {
+    isEditMode: false,
+    title: title,
+    priority: priority,
+  };
+
+  this.setState = (newState) => {
+    this.state = newState;
+    this.render();
+  };
 
   const $todoContainer = document.createElement("div");
   $todoContainer.className = "todo-container";
 
-  // todo-title-section
-  const $titleWrapper = document.createElement("div");
-  $titleWrapper.className = "todo-title-wrapper";
-  const $checkbox = new Checkbox({
-    value: id,
-    onChange: toggleTodoStatus,
-    isChecked: status === "DONE",
-    name: "todo",
-    readOnly: status === "DONE",
-  });
-  const $title = document.createElement("span");
-  $title.className = "todo-title";
-  $title.textContent = title;
-  $title.addEventListener("click", () => toggleTodoStatus(id));
+  this.render = () => {
+    $todoContainer.innerHTML = "";
 
-  $titleWrapper.appendChild($checkbox);
-  $titleWrapper.appendChild($title);
-  $todoContainer.appendChild($titleWrapper);
+    // todo-title-section
+    const $titleWrapper = document.createElement("div");
+    $titleWrapper.className = "todo-title-wrapper";
+    const $checkbox = new Checkbox({
+      value: id,
+      onChange: () =>
+        this.setState({
+          ...this.state,
+          isEditMode: !this.state.isEditMode,
+        }),
+      isChecked: this.state.isEditMode,
+      name: "todo",
+      readOnly: !this.state.isEditMode,
+    });
+    const $title = document.createElement("span");
+    $title.className = "todo-title";
+    $title.textContent = this.state.title;
+    $title.addEventListener("click", () => toggleTodoStatus(id));
+    const $editInput = new Input({
+      value: this.state.title,
+      onChange: (e) => {
+        this.setState({
+          ...this.state,
+          title: e.target.value,
+        });
+        updateTodo(id, { title: e.target.value, priority: this.state.priority });
+      },
+      placeholder: "할 일을 입력해주세요",
+    });
 
-  // todo description section
-  const $description = document.createElement("p");
-  $description.className = "todo-description";
-  $description.textContent = description;
-  $todoContainer.appendChild($description);
+    $titleWrapper.appendChild($checkbox);
+    if (this.state.isEditMode) {
+      $titleWrapper.appendChild($editInput);
+    } else {
+      $titleWrapper.appendChild($title);
+    }
+    $todoContainer.appendChild($titleWrapper);
 
-  // todo info section
-  const $infoWrapper = document.createElement("div");
-  $infoWrapper.className = "todo-info-wrapper";
-  const $dateWrapper = document.createElement("div");
-  $dateWrapper.className = "todo-date-wrapper";
-  const $calendarIcon = new Icon({
-    variant: "calendar",
-    size: "20px",
-  });
-  const $period = document.createElement("span");
-  // TODO: date parse util 함수로 빼기
-  const [start, end] = Object.values(period).map((date) =>
-    date.toLocaleDateString("ko-KR", {
-      month: "short",
-      day: "numeric",
-    })
-  );
-  $period.textContent = `${start} ~ ${end}`;
-  $dateWrapper.appendChild($calendarIcon);
-  $dateWrapper.appendChild($period);
+    // todo description section
+    const $description = document.createElement("p");
+    $description.className = "todo-description";
+    $description.textContent = description;
+    $todoContainer.appendChild($description);
 
-  const $urlWrapper = document.createElement("div");
-  $urlWrapper.className = "todo-url-wrapper";
-  const $linkIcon = new Icon({ variant: "link", size: "20px" });
-  const $urlLink = document.createElement("a");
-  $urlLink.href = relatedLink;
-  $urlLink.textContent = relatedLink;
-  $urlLink.target = "_blank";
-  $urlLink.addEventListener("click", (e) => e.stopPropagation());
-  $urlWrapper.appendChild($linkIcon);
-  $urlWrapper.appendChild($urlLink);
+    // todo info section
+    const $infoWrapper = document.createElement("div");
+    $infoWrapper.className = "todo-info-wrapper";
+    const $dateWrapper = document.createElement("div");
+    $dateWrapper.className = "todo-date-wrapper";
+    const $calendarIcon = new Icon({
+      variant: "calendar",
+      size: "20px",
+    });
+    const $period = document.createElement("span");
+    // TODO: date parse util 함수로 빼기
+    const [start, end] = Object.values(period).map((date) =>
+      date.toLocaleDateString("ko-KR", {
+        month: "short",
+        day: "numeric",
+      })
+    );
+    $period.textContent = `${start} ~ ${end}`;
+    $dateWrapper.appendChild($calendarIcon);
+    $dateWrapper.appendChild($period);
 
-  $infoWrapper.appendChild($dateWrapper);
-  $infoWrapper.appendChild($urlWrapper);
+    const $urlWrapper = document.createElement("div");
+    $urlWrapper.className = "todo-url-wrapper";
+    const $linkIcon = new Icon({ variant: "link", size: "20px" });
+    const $urlLink = document.createElement("a");
+    $urlLink.href = relatedLink;
+    $urlLink.textContent = relatedLink;
+    $urlLink.target = "_blank";
+    $urlLink.addEventListener("click", (e) => e.stopPropagation());
+    $urlWrapper.appendChild($linkIcon);
+    $urlWrapper.appendChild($urlLink);
 
-  $todoContainer.appendChild($infoWrapper);
+    $infoWrapper.appendChild($dateWrapper);
+    $infoWrapper.appendChild($urlWrapper);
 
-  // todo meta section => 우선순위, 상태
-  const $metaWrapper = document.createElement("div");
-  $metaWrapper.className = "todo-meta-wrapper";
-  const $statusBadge = new Badge({ text: status });
-  const $priorityBadge = new Badge({ text: priority });
+    $todoContainer.appendChild($infoWrapper);
 
-  $metaWrapper.appendChild($statusBadge);
-  $metaWrapper.appendChild($priorityBadge);
-  $todoContainer.appendChild($metaWrapper);
+    // todo meta section => 우선순위, 상태
+    const $metaWrapper = document.createElement("div");
+    $metaWrapper.className = "todo-meta-wrapper";
+    const $statusBadge = new Badge({ text: status });
 
-  // 변경, 삭제를 위한 icon(delete, pencil)
-  const $iconWrapper = document.createElement("div");
-  $iconWrapper.className = "icon-wrapper";
-  const $deleteButtonIcon = new ButtonIcon({
-    buttonVariant: "outline",
-    iconSize: "24px",
-    iconVariant: "delete",
-    onClick: () => deleteTodo(id),
-    text: "",
-  });
-  $deleteButtonIcon.classList.add("delete-btn-icon");
-  $iconWrapper.appendChild($deleteButtonIcon);
+    // edit mode일 때 priority select, 아닐 때 badge
+    let $priority;
+    if (this.state.isEditMode) {
+      $priority = document.createElement("select");
+      $priority.className = "priority-select";
+      ["HIGH", "MEDIUM", "LOW"].forEach((level) => {
+        const $option = document.createElement("option");
+        $option.value = level;
+        $option.textContent = level;
+        if (this.state.priority === level) $option.selected = true;
+        $priority.appendChild($option);
+      });
+      $priority.addEventListener("change", (e) => {
+        this.setState({
+          ...this.state,
+          priority: e.target.value,
+        });
+      });
+    } else {
+      $priority = new Badge({ text: this.state.priority });
+    }
 
-  $todoContainer.appendChild($iconWrapper);
+    $metaWrapper.appendChild($statusBadge);
+    $metaWrapper.appendChild($priority);
+    $todoContainer.appendChild($metaWrapper);
+
+    // 변경, 삭제를 위한 icon(delete, pencil)
+    const $iconWrapper = document.createElement("div");
+    $iconWrapper.className = "icon-wrapper";
+    const $deleteButtonIcon = new ButtonIcon({
+      buttonVariant: "outline",
+      iconSize: "24px",
+      iconVariant: "delete",
+      onClick: () => deleteTodo(id),
+      text: "",
+    });
+    $deleteButtonIcon.classList.add("delete-btn-icon");
+    $iconWrapper.appendChild($deleteButtonIcon);
+
+    $todoContainer.appendChild($iconWrapper);
+
+    console.table(this.state);
+    console.table(todo);
+  };
+
+  this.render();
 
   return new Card({ children: [$todoContainer], status });
 }

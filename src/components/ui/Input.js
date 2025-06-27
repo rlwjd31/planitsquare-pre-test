@@ -28,10 +28,11 @@ export default function Input({
     this.$input.type = "text";
     this.$input.placeholder = placeholder;
     this.$input.readOnly = !!readOnly; // 과제의 요구사항에 따라 read only구현
-    this.$input.addEventListener(
-      "input",
-      onChange && typeof onChange === "function" ? onChange : () => {}
-    );
+    this.$input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && onChange && typeof onChange === "function") {
+        onChange(e);
+      }
+    });
   };
 
   this.render();

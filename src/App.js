@@ -36,6 +36,19 @@ export default function App() {
     });
   };
 
+  this.updateTodo = (todoId, updatedTodo) => {
+    this.setState({
+      todos: this.state.todos.map((todo) =>
+        todo.id === todoId
+          ? {
+              ...todo,
+              ...updatedTodo,
+            }
+          : todo
+      ),
+    });
+  };
+
   this.render = () => {
     // 🐛 bug report commit id => 2cf4647
     // this.$main이 다시 생성되지 않도록 함수의 상단으로 빼고 render함수 내부에서 참조하여 DOM을 지우고 다시 그림.
@@ -59,6 +72,7 @@ export default function App() {
           todo,
           toggleTodoStatus: this.toggleTodoStatus,
           deleteTodo: this.deleteTodo,
+          updateTodo: this.updateTodo,
         })
       );
     });
