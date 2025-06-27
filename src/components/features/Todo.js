@@ -106,9 +106,6 @@ export default function Todo({
     $iconWrapper.appendChild($deleteButtonIcon);
 
     $todoContainer.appendChild($iconWrapper);
-
-    // console.table(this.state);
-    // console.table(todo);
   };
 
   this.render();

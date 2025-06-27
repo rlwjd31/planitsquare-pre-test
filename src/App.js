@@ -1,7 +1,20 @@
 import Header from "./components/layouts/Header.js";
-import ButtonIcon from "./components/ui/ButtonIcon.js";
 import Todo from "./components/features/Todo.js";
+import TodoControlPanel from "./components/features/TodoControlPanel.js";
 import { todos as mockTodos } from "./mock/todos.js";
+
+const defaultTodo = {
+  id: "crypto.randomUUID()",
+  title: "todo 제목입니다.",
+  status: "TODO",
+  description: "todo 세부 설명란입니다.",
+  priority: "MEDIUM",
+  period: {
+    start: new Date(),
+    end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 일주일 후
+  },
+  relatedLink: "https://www.notion.so/9d9db7e04f7644508e8d22d0f159d4df",
+};
 
 export default function App() {
   this.state = { todos: mockTodos };
@@ -28,6 +41,23 @@ export default function App() {
     });
 
     this.setState({ todos: updatedTodos });
+  };
+
+  this.addTodo = (title) => {
+    const today = new Date();
+    const oneWeekLater = new Date(today);
+    oneWeekLater.setDate(today.getDate() + 7);
+
+    this.setState({
+      todos: [
+        {
+          ...defaultTodo,
+          id: crypto.randomUUID(),
+          title,
+        },
+        ...this.state.todos,
+      ],
+    });
   };
 
   this.deleteTodo = (todoId) => {
@@ -60,7 +90,9 @@ export default function App() {
     this.$main.appendChild(new Header());
 
     // add todo & filter(todo control panel)
-    const $todoControlPanel = new TodoControlPanel();
+    const $todoControlPanel = new TodoControlPanel({
+      addTodo: this.addTodo,
+    });
     this.$main.appendChild($todoControlPanel);
 
     // todo 리스트 렌더링
@@ -85,31 +117,4 @@ export default function App() {
   this.init();
   this.setState(this.state);
   // this.render(); 👉🏻 setState에서 한 번 rendering이 되므로 주석처리
-}
-
-// todo control panel => todo 추가, 필터링 버튼
-function TodoControlPanel() {
-  const $container = document.createElement("div");
-  $container.className = "todo-control-panel";
-
-  const $addTodoButtonIcon = new ButtonIcon({
-    buttonVariant: "fill",
-    iconVariant: "add",
-    iconSize: "24px",
-    text: "Add Todo",
-    onClick: () => alert("add todo button clicked"),
-  });
-
-  const $filterTodoButtonIcon = new ButtonIcon({
-    buttonVariant: "outline",
-    iconVariant: "filter",
-    iconSize: "24px",
-    text: "Filters",
-    onClick: () => alert("add todo button clicked"),
-  });
-
-  $container.appendChild($addTodoButtonIcon);
-  $container.appendChild($filterTodoButtonIcon);
-
-  return $container;
 }
