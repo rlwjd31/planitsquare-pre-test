@@ -22,6 +22,7 @@ export default function TodoMetaSection({
   // edit mode일 때 priority select, 아닐 때 badge
   let $priority;
   if (isEditMode) {
+    // @FIXME: select는 기본으로 포커스 요소인데 포커스 되지 않음 이슈
     $priority = document.createElement("select");
     $priority.name = "todo-priority";
     ["HIGH", "MEDIUM", "LOW"].forEach((value) => {
