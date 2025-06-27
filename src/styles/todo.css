@@ -76,10 +76,9 @@
 /* 아이콘 래퍼를 오른쪽 하단에 고정 배치 */
 .icon-wrapper {
   position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+  right: -0.5rem;
+  bottom: -0.5rem;
   display: flex;
-  gap: 0.5rem;
   z-index: 1;
 }
 
@@ -102,7 +101,6 @@
   border: 1px solid var(--priority-high);
   background-color: color-mix(in srgb, var(--priority-high) 30%, transparent);
 }
-
 
 .icon-wrapper .btn-icon:focus {
   border: none;

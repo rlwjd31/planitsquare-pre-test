@@ -6,6 +6,7 @@ import isFunction from "../../utils/isFunction.js";
  * @param {string} props.value input value
  * @param {string} props.placeholder
  * @param {boolean} props.readOnly
+ * @param {string} props.name input name 속성
  * @param {(event: InputEvent) => void} props.onChange input의 event handler
  * @param {(event: InputEvent) => void} props.onEnter input의 enter event handler
  * @param {(event: FocusEvent) => void} props.onBlur input의 blur event handler
@@ -15,6 +16,7 @@ export default function Input({
   value = "",
   placeholder = "todo 입력",
   readOnly,
+  name,
   onChange,
   onEnter,
   onBlur,
@@ -31,6 +33,7 @@ export default function Input({
   this.render = () => {
     this.$input.value = value;
     this.$input.className = "input";
+    this.$input.name = name;
     this.$input.type = "text";
     this.$input.placeholder = placeholder;
     this.$input.readOnly = !!readOnly; // 과제의 요구사항에 따라 read only구현
