@@ -1,9 +1,8 @@
-import Badge from "./ui/Badge.js";
-import ButtonIcon from "./ui/ButtonIcon.js";
-import Card from "./ui/Card.js";
-import Checkbox from "./ui/Checkbox.js";
-import Icon from "./ui/Icon.js";
-import Input from "./ui/Input.js";
+import Badge from "../ui/Badge.js";
+import ButtonIcon from "../ui/ButtonIcon.js";
+import Card from "../ui/Card.js";
+import Icon from "../ui/Icon.js";
+import TitleSection from "./TodoTitleSection.js";
 
 /**
  * @param {Object} props
@@ -25,7 +24,12 @@ import Input from "./ui/Input.js";
  * @param {(todoId: string, updatedTodo: Partial<Todo>) => void} props.updateTodo - todo를 업데이트하는 함수
  * @returns {HTMLDivElement}
  */
-export default function Todo({ todo, toggleTodoStatus, deleteTodo, updateTodo }) {
+export default function Todo({
+  todo,
+  toggleTodoStatus,
+  deleteTodo,
+  updateTodo,
+}) {
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
 
@@ -46,43 +50,24 @@ export default function Todo({ todo, toggleTodoStatus, deleteTodo, updateTodo })
   this.render = () => {
     $todoContainer.innerHTML = "";
 
-    // todo-title-section
-    const $titleWrapper = document.createElement("div");
-    $titleWrapper.className = "todo-title-wrapper";
-    const $checkbox = new Checkbox({
-      value: id,
-      onChange: () =>
-        this.setState({
-          ...this.state,
-          isEditMode: !this.state.isEditMode,
-        }),
-      isChecked: this.state.isEditMode,
-      name: "todo",
-      readOnly: !this.state.isEditMode,
-    });
-    const $title = document.createElement("span");
-    $title.className = "todo-title";
-    $title.textContent = this.state.title;
-    $title.addEventListener("click", () => toggleTodoStatus(id));
-    const $editInput = new Input({
-      value: this.state.title,
-      onChange: (e) => {
-        this.setState({
-          ...this.state,
-          title: e.target.value,
-        });
-        updateTodo(id, { title: e.target.value, priority: this.state.priority });
+    // todo title section
+    const $titleSection = new TitleSection({
+      todoId: id,
+      title: this.state.title,
+      onChangeTitle: (e) => {
+        this.setState({ ...this.state, title: e.target.value });
       },
-      placeholder: "할 일을 입력해주세요",
+      onEnterTitle: (e) =>
+        updateTodo(id, {
+          title: e.target.value,
+          priority: this.state.priority,
+        }),
+      onChangeCheckbox: () =>
+        this.setState({ ...this.state, isEditMode: !this.state.isEditMode }),
+      toggleTodoStatus,
+      isEditMode: this.state.isEditMode,
     });
-
-    $titleWrapper.appendChild($checkbox);
-    if (this.state.isEditMode) {
-      $titleWrapper.appendChild($editInput);
-    } else {
-      $titleWrapper.appendChild($title);
-    }
-    $todoContainer.appendChild($titleWrapper);
+    $todoContainer.appendChild($titleSection);
 
     // todo description section
     const $description = document.createElement("p");
@@ -173,8 +158,8 @@ export default function Todo({ todo, toggleTodoStatus, deleteTodo, updateTodo })
 
     $todoContainer.appendChild($iconWrapper);
 
-    console.table(this.state);
-    console.table(todo);
+    // console.table(this.state);
+    // console.table(todo);
   };
 
   this.render();

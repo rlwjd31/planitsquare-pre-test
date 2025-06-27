@@ -1,6 +1,6 @@
 import Header from "./components/layouts/Header.js";
 import ButtonIcon from "./components/ui/ButtonIcon.js";
-import Todo from "./components/todo.js";
+import Todo from "./components/features/Todo.js";
 import { todos as mockTodos } from "./mock/todos.js";
 
 export default function App() {
