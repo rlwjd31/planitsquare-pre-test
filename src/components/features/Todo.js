@@ -54,7 +54,7 @@ export default function Todo({
     const $titleSection = new TitleSection({
       todoId: id,
       title: this.state.title,
-      onChangeTitle: (e) => {
+      onBlurTitle: (e) => {
         this.setState({ ...this.state, title: e.target.value });
       },
       onEnterTitle: (e) =>

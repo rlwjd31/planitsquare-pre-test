@@ -1,11 +1,22 @@
 import Checkbox from "../ui/Checkbox.js";
 import Input from "../ui/Input.js";
 
-// todo-title-section
+/**
+ * Todo 아이템의 제목 섹션 컴포넌트
+ * @param {Object} props
+ * @param {string} props.todoId - todo의 고유 id
+ * @param {string} props.title - todo의 제목
+ * @param {(event: FocusEvent) => void} props.onBlurTitle - 제목 입력 필드의 blur 이벤트 핸들러
+ * @param {(event: InputEvent) => void} props.onEnterTitle - 제목 입력 필드의 enter 이벤트 핸들러
+ * @param {(event: InputEvent) => void} props.onChangeCheckbox - 체크박스 변경 이벤트 핸들러
+ * @param {(todoId: string) => void} props.toggleTodoStatus - todo 상태 토글 함수
+ * @param {boolean} props.isEditMode - 편집 모드 여부
+ * @returns {HTMLDivElement} 제목 섹션 엘리먼트
+ */
 export default function TitleSection({
   todoId,
   title,
-  onChangeTitle,
+  onBlurTitle,
   onEnterTitle,
   onChangeCheckbox,
   toggleTodoStatus,
@@ -24,10 +35,9 @@ export default function TitleSection({
 
   let $titleElement;
   if (isEditMode) {
-    // @FIXME: todo.js의 존재하는 state가 갱신되면서 input의 focus가 풀리는 이슈
     const $editInput = new Input({
       value: title,
-      onChange: onChangeTitle,
+      onBlur: onBlurTitle,
       onEnter: onEnterTitle,
       placeholder: "할 일을 입력해주세요",
     });
