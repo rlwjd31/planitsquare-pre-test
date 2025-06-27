@@ -15,7 +15,14 @@ export default function TodoControlPanel({ addTodo }) {
 
   const $input = new Input({
     placeholder: "Add Todo",
-    onEnter: (e) => addTodo(e.target.value),
+    onEnter: (e) => {
+      if (e.target.value.trim() === "") {
+        alert("할 일을 입력해주세요.");
+        $input.focus();
+        return;
+      }
+      addTodo(e.target.value);
+    },
     name: "add-todo-input",
   });
 
@@ -26,7 +33,14 @@ export default function TodoControlPanel({ addTodo }) {
     iconVariant: "add",
     iconSize: "24px",
     text: "Add Todo",
-    onClick: () => addTodo($input.value),
+    onClick: () => {
+      if ($input.value.trim() === "") {
+        alert("할 일을 입력해주세요.");
+        $input.focus();
+        return;
+      }
+      addTodo($input.value);
+    },
   });
 
   const $filterTodoButtonIcon = new ButtonIcon({

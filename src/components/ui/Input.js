@@ -38,11 +38,7 @@ export default function Input({
     this.$input.placeholder = placeholder;
     this.$input.readOnly = !!readOnly; // 과제의 요구사항에 따라 read only구현
     this.$input.addEventListener("keydown", (e) =>
-      isFunction(onEnter) && e.key === "Enter"
-        ? onEnter(e)
-        : () => {
-            console.log("hereasdfasdfasdf");
-          }
+      isFunction(onEnter) && e.key === "Enter" ? onEnter(e) : () => {}
     );
     this.$input.addEventListener("input", (e) =>
       isFunction(onChange) ? onChange(e) : () => {}
