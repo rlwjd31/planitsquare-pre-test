@@ -3,6 +3,7 @@ import ButtonIcon from "../ui/ButtonIcon.js";
 import Card from "../ui/Card.js";
 import Icon from "../ui/Icon.js";
 import TitleSection from "./TodoTitleSection.js";
+import TodoDescription from "./TodoDescription.js";
 
 /**
  * @param {Object} props
@@ -32,6 +33,7 @@ export default function Todo({
 }) {
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
+  const $todoContainer = document.createElement("div");
 
   this.state = {
     isEditMode: false,
@@ -44,11 +46,9 @@ export default function Todo({
     this.render();
   };
 
-  const $todoContainer = document.createElement("div");
-  $todoContainer.className = "todo-container";
-
   this.render = () => {
     $todoContainer.innerHTML = "";
+    $todoContainer.className = "todo-container";
 
     // todo title section
     const $titleSection = new TitleSection({
@@ -67,12 +67,11 @@ export default function Todo({
       toggleTodoStatus,
       isEditMode: this.state.isEditMode,
     });
+
     $todoContainer.appendChild($titleSection);
 
     // todo description section
-    const $description = document.createElement("p");
-    $description.className = "todo-description";
-    $description.textContent = description;
+    const $description = new TodoDescription({ description });
     $todoContainer.appendChild($description);
 
     // todo info section
