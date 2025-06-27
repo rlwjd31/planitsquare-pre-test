@@ -1,9 +1,9 @@
-import Badge from "../ui/Badge.js";
 import ButtonIcon from "../ui/ButtonIcon.js";
 import Card from "../ui/Card.js";
 import TitleSection from "./TodoTitleSection.js";
 import TodoDescription from "./TodoDescription.js";
 import TodoInfoSection from "./TodoInfoSection.js";
+import TodoMetaSection from "./TodoMetaSection.js";
 
 /**
  * @param {Object} props
@@ -76,39 +76,21 @@ export default function Todo({
 
     // todo info section
     const $infoSection = new TodoInfoSection({ period, relatedLink });
-
     $todoContainer.appendChild($infoSection);
 
     // todo meta section => 우선순위, 상태
-    const $metaWrapper = document.createElement("div");
-    $metaWrapper.className = "todo-meta-wrapper";
-    const $statusBadge = new Badge({ text: status });
-
-    // edit mode일 때 priority select, 아닐 때 badge
-    let $priority;
-    if (this.state.isEditMode) {
-      $priority = document.createElement("select");
-      $priority.className = "priority-select";
-      ["HIGH", "MEDIUM", "LOW"].forEach((level) => {
-        const $option = document.createElement("option");
-        $option.value = level;
-        $option.textContent = level;
-        if (this.state.priority === level) $option.selected = true;
-        $priority.appendChild($option);
-      });
-      $priority.addEventListener("change", (e) => {
+    const $metaSection = new TodoMetaSection({
+      isEditMode: this.state.isEditMode,
+      status,
+      priority: this.state.priority,
+      onChangePriority: (e) => {
         this.setState({
           ...this.state,
           priority: e.target.value,
         });
-      });
-    } else {
-      $priority = new Badge({ text: this.state.priority });
-    }
-
-    $metaWrapper.appendChild($statusBadge);
-    $metaWrapper.appendChild($priority);
-    $todoContainer.appendChild($metaWrapper);
+      },
+    });
+    $todoContainer.appendChild($metaSection);
 
     // 변경, 삭제를 위한 icon(delete, pencil)
     const $iconWrapper = document.createElement("div");

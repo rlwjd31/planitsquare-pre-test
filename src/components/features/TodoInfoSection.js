@@ -1,6 +1,13 @@
 import Icon from "../ui/Icon.js";
 import parseDate from "../../utils/parseDate.js";
 
+/**
+ * Todo의 기간과 관련 링크를 표시하는 섹션 컴포넌트
+ * @param {Object} props
+ * @param {{start: Date, end: Date}} props.period Todo의 시작일과 종료일
+ * @param {string} props.relatedLink Todo와 관련된 URL 링크
+ * @returns {HTMLDivElement} Todo 정보를 담은 div 엘리먼트
+ */
 export default function TodoInfoSection({ period, relatedLink }) {
   const $infoWrapper = document.createElement("div");
   $infoWrapper.className = "todo-info-wrapper";
