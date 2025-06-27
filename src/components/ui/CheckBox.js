@@ -48,6 +48,13 @@ export default function CheckBox({
       isChecked ? "checked" : "unchecked"
     );
 
+    // 접근성 고려하여 enter시 체크박스 클릭
+    this.$wrapper.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        this.$checkbox.click();
+      }
+    });
+
     this.$wrapper.appendChild(this.$checkbox);
     this.$wrapper.appendChild(this.$checkIcon);
   };

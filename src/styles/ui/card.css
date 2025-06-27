@@ -32,3 +32,9 @@
   border-color: var(--status-todo);
   background: #f8faff;
 }
+
+.card:focus-within {
+  box-shadow: 0 4px 16px 0 rgba(31, 41, 55, 0.1);
+  border-color: var(--primary);
+  transform: translateY(-2px) scale(1.01);
+}

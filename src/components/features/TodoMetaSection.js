@@ -9,7 +9,12 @@ import Badge from "../ui/Badge.js";
  * @param {(event: Event) => void} props.onChangePriority 우선순위 변경 이벤트 핸들러
  * @returns {HTMLDivElement} Todo 메타 정보를 담은 div 엘리먼트
  */
-export default function TodoMetaSection({ status, priority, isEditMode, onChangePriority }) {
+export default function TodoMetaSection({
+  status,
+  priority,
+  isEditMode,
+  onChangePriority,
+}) {
   const $metaWrapper = document.createElement("div");
   $metaWrapper.className = "todo-meta-wrapper";
   const $statusBadge = new Badge({ text: status });
@@ -18,6 +23,7 @@ export default function TodoMetaSection({ status, priority, isEditMode, onChange
   let $priority;
   if (isEditMode) {
     $priority = document.createElement("select");
+    $priority.name = "todo-priority";
     ["HIGH", "MEDIUM", "LOW"].forEach((value) => {
       const $option = document.createElement("option");
       $option.value = value;

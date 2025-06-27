@@ -45,8 +45,14 @@ export default function TitleSection({
   } else {
     const $title = document.createElement("span");
     $title.className = "todo-title";
+    $title.tabIndex = 0;
     $title.textContent = title;
     $title.addEventListener("click", () => toggleTodoStatus(todoId));
+    $title.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        toggleTodoStatus(todoId);
+      }
+    });
 
     $titleElement = $title;
   }
