@@ -87,7 +87,14 @@ export default function App() {
     const $root = document.getElementById("app");
 
     // add header
-    this.$main.appendChild(new Header());
+    this.$main.appendChild(
+      new Header({
+        totalTodosCount: this.state.todos.length,
+        completedTodosCount: this.state.todos.filter(
+          (todo) => todo.status === "DONE"
+        ).length,
+      })
+    );
 
     // add todo & filter(todo control panel)
     const $todoControlPanel = new TodoControlPanel({
