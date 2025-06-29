@@ -12,7 +12,11 @@ import Input from "../ui/Input.js";
  * @param {() => void} props.deleteAllTodos 모든 Todo를 삭제하는 핸들러 함수
  * @returns {HTMLDivElement} Todo 컨트롤 패널 엘리먼트
  */
-export default function TodoControlPanel({ addTodo, completeAllTodos, deleteAllTodos }) {
+export default function TodoControlPanel({
+  addTodo,
+  completeAllTodos,
+  deleteAllTodos,
+}) {
   const $container = document.createElement("div");
   $container.className = "todo-control-panel";
   const $addTodoWrapper = document.createElement("div");
@@ -47,17 +51,7 @@ export default function TodoControlPanel({ addTodo, completeAllTodos, deleteAllT
       addTodo($input.value);
     },
   });
-
-  const $filterTodoButtonIcon = new ButtonIcon({
-    buttonVariant: "outline",
-    iconVariant: "filter",
-    iconSize: "24px",
-    text: "Filters",
-    onClick: () => alert("add todo button clicked"),
-  });
-
   $addTodoWrapper.appendChild($addTodoButtonIcon);
-  $addTodoWrapper.appendChild($filterTodoButtonIcon);
 
   // 전체 todo 완료 및 삭제 관리 UI
   const $bulkWrapper = document.createElement("div");

@@ -25,15 +25,15 @@ export default function App() {
     const todosFromStorage = getFromStorage();
 
     // TODO: 과제의 요구사항에 따라 제출시 주석
-    if (todosFromStorage.length > 0) {
-      this.setState({ todos: todosFromStorage });
-    } else {
-      saveAtStorage(mockTodos);
-      this.setState({ todos: mockTodos });
-    }
+    // if (todosFromStorage.length > 0) {
+    //   this.setState({ todos: todosFromStorage });
+    // } else {
+    //   saveAtStorage(mockTodos);
+    //   this.setState({ todos: mockTodos });
+    // }
 
     // TODO: 제출시 아래 주석 해제
-    // this.setState({ todos: todosFromStorage });
+    this.setState({ todos: todosFromStorage });
   };
 
   this.setState = (nextState) => {
@@ -120,7 +120,7 @@ export default function App() {
       })
     );
 
-    // add todo & filter(todo control panel)
+    // add todo
     const $todoControlPanel = new TodoControlPanel({
       addTodo: this.addTodo,
       completeAllTodos: this.completeAllTodos,

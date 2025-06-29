@@ -31,18 +31,13 @@ export default function TodoInfoSection({ isEditMode, period, relatedLink }) {
     $startInput.className = "todo-date-input";
     $startInput.value = formatDateToInputValue(period.start);
     $startInput.name = TODO_FORM_FIELD.START_DATE;
-    $startInput.addEventListener("change", (e) => {
-      console.log("start", e.target.value, "\t", typeof e.target.value);
-    });
+
 
     const $endInput = document.createElement("input");
     $endInput.type = "date";
     $endInput.className = "todo-date-input";
     $endInput.value = formatDateToInputValue(period.end);
     $endInput.name = TODO_FORM_FIELD.END_DATE;
-    $endInput.addEventListener("change", (e) => {
-      console.log("end", e.target.value, "\t", typeof e.target.value);
-    });
 
     $dateWrapper.appendChild($startInput);
     $dateWrapper.appendChild($endInput);
