@@ -35,6 +35,7 @@ export default function Todo({
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
   const $todoContainer = document.createElement("div");
+  $todoContainer.className = "todo-container";
   const $form = document.createElement("form");
   $form.className = "todo-edit-form";
 
@@ -52,9 +53,6 @@ export default function Todo({
   this.render = () => {
     $todoContainer.innerHTML = "";
     $form.innerHTML = "";
-    $todoContainer.className = "todo-container";
-
-    // $todoContainer.appendChild($form);
 
     // todo title section
     const $titleSection = new TitleSection({
@@ -86,7 +84,11 @@ export default function Todo({
     // todo description section
     const $descriptionSection = new TodoDescription({ description });
     // todo info section
-    const $infoSection = new TodoInfoSection({ period, relatedLink });
+    const $infoSection = new TodoInfoSection({
+      isEditMode: this.state.isEditMode,
+      period,
+      relatedLink,
+    });
     // todo meta section => 우선순위, 상태
     const $metaSection = new TodoMetaSection({
       isEditMode: this.state.isEditMode,
@@ -112,50 +114,26 @@ export default function Todo({
     $deleteButtonIcon.classList.add("delete-btn-icon");
     $iconWrapper.appendChild($deleteButtonIcon);
 
-    if (this.state.isEditMode) {
-      $form.appendChild($titleSection);
-    } else {
-      $todoContainer.appendChild($titleSection);
-    }
+    const todoSections = [
+      $titleSection,
+      $descriptionSection,
+      $infoSection,
+      $metaSection,
+      $iconWrapper,
+    ];
 
-    // $todoContainer.appendChild($titleSection);
-
-    if (this.state.isEditMode) {
-      $form.appendChild($descriptionSection);
-    } else {
-      $todoContainer.appendChild($descriptionSection);
-    }
-
-    if (this.state.isEditMode) {
-      $form.appendChild($infoSection);
-    } else {
-      $todoContainer.appendChild($infoSection);
-    }
+    todoSections.forEach((section) =>
+      this.state.isEditMode
+        ? $form.appendChild(section)
+        : $todoContainer.appendChild(section)
+    );
 
     if (this.state.isEditMode) {
-      $form.appendChild($metaSection);
-    } else {
-      $todoContainer.appendChild($metaSection);
-    }
-
-    if (this.state.isEditMode) {
-      $form.appendChild($iconWrapper);
       $todoContainer.appendChild($form);
-    } else {
-      $todoContainer.appendChild($iconWrapper);
     }
-
-    console.table(this.state);
   };
 
   this.render();
-
-  // setTimeout(() => {
-  //   $todoContainer.innerHTML = "";
-  //   const $form = document.createElement("form");
-  //   $form.className = "todo-edit-form";
-  //   $todoContainer.appendChild($form);
-  // }, 3000);
 
   return new Card({ children: [$todoContainer], status });
 }

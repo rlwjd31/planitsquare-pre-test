@@ -34,8 +34,6 @@ export default function App() {
 
     // TODO: 제출시 아래 주석 해제
     // this.setState({ todos: todosFromStorage });
-
-    console.table(this.state.todos);
   };
 
   this.setState = (nextState) => {
