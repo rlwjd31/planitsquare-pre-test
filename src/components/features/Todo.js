@@ -52,16 +52,21 @@ export default function Todo({
   this.submitForm = (e) => {
     e.preventDefault();
     const formData = new FormData($form);
-    const data = {
+    const todoData = {
       title: formData.get(TODO_FORM_FIELD.TITLE),
       description: formData.get(TODO_FORM_FIELD.DESCRIPTION),
       startDate: formData.get(TODO_FORM_FIELD.START_DATE),
       endDate: formData.get(TODO_FORM_FIELD.END_DATE),
-      relatedLink: formData.get(TODO_FORM_FIELD.RELATED_LINK),
       priority: formData.get(TODO_FORM_FIELD.PRIORITY),
     };
-    console.log(data); // 추출된 값 확인
-    // 이후 updateTodo 등 원하는 로직 실행
+
+    updateTodo(id, {
+      ...todoData,
+      period: {
+        start: todoData.startDate ? new Date(todoData.startDate) : null,
+        end: todoData.endDate ? new Date(todoData.endDate) : null,
+      },
+    });
   };
 
   this.init = () => {
