@@ -42,7 +42,6 @@ export default function Todo({
 
   this.state = {
     isEditMode: false,
-    title: title,
     priority: priority,
   };
 
@@ -76,15 +75,12 @@ export default function Todo({
 
     // todo title section
     const $titleSection = new TitleSection({
+      title: title,
       todoId: id,
-      title: this.state.title,
       isDone: status === "DONE",
-      onBlurTitle: (e) => {
-        if (isEmptyString(e.target.value)) return;
-        this.setState({ ...this.state, title: e.target.value });
-      },
       onEnterTitle: (e) => {
         const { value } = e.target;
+
         if (isEmptyString(value) || this.state.title === "") {
           alert("할 일을 입력해주세요");
           e.target.focus();

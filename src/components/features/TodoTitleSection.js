@@ -19,7 +19,6 @@ export default function TitleSection({
   todoId,
   title,
   isDone,
-  onBlurTitle,
   onEnterTitle,
   onChangeCheckbox,
   toggleTodoStatus,
@@ -40,7 +39,6 @@ export default function TitleSection({
 
   const $editInput = new Input({
     value: title,
-    onBlur: onBlurTitle,
     onEnter: onEnterTitle,
     placeholder: "할 일을 입력해주세요",
     readOnly: isDone,
