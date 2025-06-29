@@ -64,6 +64,8 @@
 /* 아이콘 래퍼를 오른쪽 하단에 고정 배치 */
 .icon-wrapper {
   position: absolute;
+  display: flex;
+  gap: 0.5rem;
   right: -0.5rem;
   bottom: -0.5rem;
   display: flex;
@@ -80,6 +82,17 @@
   border: none;
 }
 
+.icon-wrapper .edit-btn-icon {
+  border: 1px solid #74c476;
+  background-color: #74c476;
+  transition: border 0.2s ease-in-out;
+}
+
+.icon-wrapper .edit-btn-icon:hover {
+  border: 1px solid #74c476;
+  background-color: color-mix(in srgb, #74c476 80%, transparent);
+}
+
 .icon-wrapper .delete-btn-icon {
   border: 1px solid var(--danger);
   transition: border 0.2s ease-in-out;
@@ -87,7 +100,7 @@
 
 .icon-wrapper .delete-btn-icon:hover {
   border: 1px solid var(--danger);
-  background-color: color-mix(in srgb, var(--danger) 30%, transparent);
+  background-color: color-mix(in srgb, var(--danger) 10%, transparent);
 }
 
 .icon-wrapper .btn-icon:focus {

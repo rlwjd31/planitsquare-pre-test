@@ -120,6 +120,17 @@ export default function Todo({
     // todo 변경, 삭제를 위한 icon(delete, pencil)
     const $iconWrapper = document.createElement("div");
     $iconWrapper.className = "icon-wrapper";
+    if (this.state.isEditMode) {
+      const $editSubmitButtonIcon = new ButtonIcon({
+        type: "submit",
+        buttonVariant: "outline",
+        iconSize: "24px",
+        iconVariant: "check",
+        text: "",
+      });
+      $editSubmitButtonIcon.classList.add("edit-btn-icon");
+      $iconWrapper.appendChild($editSubmitButtonIcon);
+    }
     const $deleteButtonIcon = new ButtonIcon({
       buttonVariant: "outline",
       iconSize: "24px",
@@ -145,12 +156,6 @@ export default function Todo({
     );
 
     if (this.state.isEditMode) {
-      // ! button test
-
-      const $submitButton = document.createElement("button");
-      $submitButton.textContent = "Submit";
-      $form.appendChild($submitButton);
-      /// -------------------------------
       $todoContainer.appendChild($form);
     }
   };
