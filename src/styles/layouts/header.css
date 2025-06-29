@@ -41,14 +41,14 @@
 
 .progress-bg {
   fill: none;
-  stroke: #e5e7eb;
+  stroke: var(--border);
   stroke-width: 8;
   transition: stroke 0.3s ease;
 }
 
 .progress-fill {
   fill: none;
-  stroke: #3b82f6;
+  stroke: var(--primary);
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.5s ease-in-out;

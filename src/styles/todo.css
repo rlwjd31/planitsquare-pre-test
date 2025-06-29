@@ -93,13 +93,13 @@
 }
 
 .icon-wrapper .delete-btn-icon {
-  border: 1px solid var(--priority-high);
+  border: 1px solid var(--danger);
   transition: border 0.2s ease-in-out;
 }
 
 .icon-wrapper .delete-btn-icon:hover {
-  border: 1px solid var(--priority-high);
-  background-color: color-mix(in srgb, var(--priority-high) 30%, transparent);
+  border: 1px solid var(--danger);
+  background-color: color-mix(in srgb, var(--danger) 30%, transparent);
 }
 
 .icon-wrapper .btn-icon:focus {
