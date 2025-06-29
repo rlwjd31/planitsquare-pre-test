@@ -26,7 +26,11 @@
 }
 
 .checkbox-wrapper:focus-within {
-  box-shadow: 0 0 0 2px var(--priority-high);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.checkbox-wrapper:active {
+  box-shadow: none;
 }
 
 .checkbox-wrapper[data-checked="checked"] {
