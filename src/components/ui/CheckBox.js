@@ -7,14 +7,14 @@ import Icon from "./Icon.js";
  * @param {(checked: boolean, value: string) => void} [props.onChange=()=>{}]
  * @param {string} [props.name=""]
  * @param {string} props.value
- * @param {boolean} [props.readOnly=false]
+ * @param {boolean} [props.disabled=false]
  */
 export default function CheckBox({
   isChecked = false,
   onChange = () => {},
   name = "",
   value,
-  readOnly = false,
+  disabled = false,
 }) {
   this.$checkbox = document.createElement("input");
   this.$wrapper = document.createElement("div");
@@ -24,10 +24,10 @@ export default function CheckBox({
     // 숨김처리한 실제 checkbox
     this.$checkbox.type = "checkbox";
     this.$checkbox.className = "checkbox";
-    this.$checkbox.checked = isChecked;
+    this.$checkbox.checked = !!isChecked;
     this.$checkbox.name = name;
     this.$checkbox.value = value;
-    this.$checkbox.readOnly = readOnly;
+    this.$checkbox.disabled = !!disabled;
     this.$checkbox.onchange = (e) => {
       e.stopPropagation();
       onChange(e.target.value);

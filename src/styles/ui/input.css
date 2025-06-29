@@ -17,19 +17,10 @@
   color: var(--text-muted);
 }
 
-.input:focus {
+/* read-only도 focus가 되므로 read-only가 아닐 때 focus style 적용 */
+.input:focus:not(:read-only),
+.input:focus:not(:active) {
   outline: none;
   border-color: var(--primary);
   box-shadow: var(--focus-ring);
-}
-
-.input:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  background-color: var(--background-muted);
-}
-
-.input:read-only {
-  background-color: var(--background-muted);
-  cursor: default;
 }
