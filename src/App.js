@@ -2,6 +2,7 @@ import Header from "./components/layouts/Header.js";
 import Todo from "./components/features/Todo.js";
 import TodoControlPanel from "./components/features/TodoControlPanel.js";
 import { todos as mockTodos } from "./mock/todos.js";
+import { getFromStorage, saveAtStorage } from "./utils/statePersistence.js";
 
 const defaultTodo = {
   id: "crypto.randomUUID()",
@@ -21,11 +22,26 @@ export default function App() {
   this.$main = document.createElement("main");
 
   this.init = () => {
-    // TODO: 나중에 state persistence기능 구현하기
+    const todosFromStorage = getFromStorage();
+
+    // TODO: 과제의 요구사항에 따라 제출시 주석
+    if (todosFromStorage.length > 0) {
+      this.setState({ todos: todosFromStorage });
+    } else {
+      saveAtStorage(mockTodos);
+      this.setState({ todos: mockTodos });
+    }
+
+    // TODO: 제출시 아래 주석 해제
+    // this.setState({ todos: todosFromStorage });
+
+    console.table(this.state.todos);
   };
 
   this.setState = (nextState) => {
     this.state = nextState;
+    saveAtStorage(this.state.todos);
+
     this.render();
   };
 
@@ -134,6 +150,4 @@ export default function App() {
   };
 
   this.init();
-  this.setState(this.state);
-  // this.render(); 👉🏻 setState에서 한 번 rendering이 되므로 주석처리
 }
