@@ -35,6 +35,8 @@ export default function Todo({
   const { id, title, status, description, period, relatedLink, priority } =
     todo;
   const $todoContainer = document.createElement("div");
+  const $form = document.createElement("form");
+  $form.className = "todo-edit-form";
 
   this.state = {
     isEditMode: false,
@@ -49,7 +51,10 @@ export default function Todo({
 
   this.render = () => {
     $todoContainer.innerHTML = "";
+    $form.innerHTML = "";
     $todoContainer.className = "todo-container";
+
+    // $todoContainer.appendChild($form);
 
     // todo title section
     const $titleSection = new TitleSection({
@@ -78,17 +83,10 @@ export default function Todo({
       toggleTodoStatus,
       isEditMode: this.state.isEditMode,
     });
-
-    $todoContainer.appendChild($titleSection);
-
     // todo description section
     const $descriptionSection = new TodoDescription({ description });
-    $todoContainer.appendChild($descriptionSection);
-
     // todo info section
     const $infoSection = new TodoInfoSection({ period, relatedLink });
-    $todoContainer.appendChild($infoSection);
-
     // todo meta section => 우선순위, 상태
     const $metaSection = new TodoMetaSection({
       isEditMode: this.state.isEditMode,
@@ -101,9 +99,7 @@ export default function Todo({
         });
       },
     });
-    $todoContainer.appendChild($metaSection);
-
-    // 변경, 삭제를 위한 icon(delete, pencil)
+    // todo 변경, 삭제를 위한 icon(delete, pencil)
     const $iconWrapper = document.createElement("div");
     $iconWrapper.className = "icon-wrapper";
     const $deleteButtonIcon = new ButtonIcon({
@@ -116,12 +112,50 @@ export default function Todo({
     $deleteButtonIcon.classList.add("delete-btn-icon");
     $iconWrapper.appendChild($deleteButtonIcon);
 
-    $todoContainer.appendChild($iconWrapper);
+    if (this.state.isEditMode) {
+      $form.appendChild($titleSection);
+    } else {
+      $todoContainer.appendChild($titleSection);
+    }
+
+    // $todoContainer.appendChild($titleSection);
+
+    if (this.state.isEditMode) {
+      $form.appendChild($descriptionSection);
+    } else {
+      $todoContainer.appendChild($descriptionSection);
+    }
+
+    if (this.state.isEditMode) {
+      $form.appendChild($infoSection);
+    } else {
+      $todoContainer.appendChild($infoSection);
+    }
+
+    if (this.state.isEditMode) {
+      $form.appendChild($metaSection);
+    } else {
+      $todoContainer.appendChild($metaSection);
+    }
+
+    if (this.state.isEditMode) {
+      $form.appendChild($iconWrapper);
+      $todoContainer.appendChild($form);
+    } else {
+      $todoContainer.appendChild($iconWrapper);
+    }
 
     console.table(this.state);
   };
 
   this.render();
+
+  // setTimeout(() => {
+  //   $todoContainer.innerHTML = "";
+  //   const $form = document.createElement("form");
+  //   $form.className = "todo-edit-form";
+  //   $todoContainer.appendChild($form);
+  // }, 3000);
 
   return new Card({ children: [$todoContainer], status });
 }
