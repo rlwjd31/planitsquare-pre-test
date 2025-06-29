@@ -9,12 +9,11 @@
 - [x] 목록 전체 완료/삭제 기능을 구현합니다.
 - [x] 완료된 할 일 갯수 / 전체갯수를 표시하는 컴포넌트를 구현합니다.  
 
-## 추가 기능
+## 추가 구현
 - [x] Todo 상세 정보 관리 (설명, 기간, 우선순위, 관련 링크)
-- [x] 컴포넌트 기반 아키텍처
 - [x] JSDoc을 활용한 타입 안정성
 - [x] 키보드 접근성 지원
-- [x] 반응형 레이아웃 (Grid 활용)
+- [x] 반응형 레이아웃 (Grid, text ellipsis ...)
 - [x] 입력값 유효성 검사
 - [x] 원형 프로그레스 바로 진행률 시각화
 
@@ -82,18 +81,7 @@ this.setState = (nextState) => {
 
 // src/utils/statePersistence.js
 const STORAGE_KEY = "todos";
-/**
- * state persistence with localStorage
- * @returns {Array<{
- *   id: string;
- *   title: string;
- *   status: 'DONE' | 'TODO';
- *   description: string;
- *   period: { start: Date; end: Date };
- *   relatedLink: string;
- *   priority: 'HIGH' | 'MEDIUM' | 'LOW';
- * }> | []} 빈 배열이나 TODO 타입의 배열을 반환합니다.
- */
+
 export const getFromStorage = () => {
   try {
     const todosString = localStorage.getItem(STORAGE_KEY);
@@ -154,10 +142,11 @@ export const saveAtStorage = (todos) => {
 - button icon을 통한 Todo 삭제
   
 ## Input내 Enter를 통한 추가
-- 빈 값일 시 update 무효화
+- 값 검증 후 빈 값일 시 update 무효화
 - 빈 값 alert이후 다시 focus
   
-![untitle](https://github.com/user-attachments/assets/a740f038-2098-4ba6-9aff-13c816795e77)
+![untitle](https://github.com/user-attachments/assets/622899f9-d4ac-4520-b438-d63a8eb923a6)
+
 
 ```javascript
 // App.js
@@ -232,6 +221,9 @@ const $deleteButtonIcon = new ButtonIcon({
 ```
 
 # 3. 할일 완료 및 UI 처리
+완료된 todo는 `input.readOnly=true` 설정하고 수정을 trigger하는 checkbox에 `disabled` 속성을 부여하고 수정하지 못 하도록 구현했습니다.
+
+
 - Todo의 title을 클릭하면 완료 <-> 미완료로 toggle
 - 완료 시 => 파란색, 미완료 시 => 살짝 회색
 
@@ -254,9 +246,50 @@ this.toggleTodoStatus = (todoId) => {
 };
 
 // TodoTitleSection.js
-if (!isEditMode) {
-  $editInput.addEventListener("click", (e) => toggleTodoStatus(todoId));
+import { TODO_FORM_FIELD } from "../../constants/todoFormField.js";
+import Checkbox from "../ui/Checkbox.js";
+import Input from "../ui/Input.js";
+
+/**
+ * Todo 아이템의 제목 섹션 컴포넌트
+ * @param {Object} props
+ * @param {string} props.todoId - todo의 고유 id
+ * @param {string} props.title - todo의 제목
+ * @param {boolean} props.isDone - todo의 상태
+ * @param {(event: FocusEvent) => void} props.onBlurTitle - 제목 입력 필드의 blur 이벤트 핸들러
+ * @param {(event: InputEvent) => void} props.onEnterTitle - 제목 입력 필드의 enter 이벤트 핸들러
+ * @param {(event: InputEvent) => void} props.onChangeCheckbox - 체크박스 변경 이벤트 핸들러
+ * @param {(todoId: string) => void} props.toggleTodoStatus - todo 상태 토글 함수
+ * @param {boolean} props.isEditMode - 편집 모드 여부
+ * @returns {HTMLDivElement} 제목 섹션 엘리먼트
+ */
+export default function TitleSection({
+  ... //
+  todoId,
+  title,
+  isDone,
+  toggleTodoStatus,
+  isEditMode,
+}) {
+  ... //
+
+  const $checkbox = new Checkbox({
+    ... //
+    isChecked: isEditMode,
+    // 👇 완료된 todo는 수정을 trigger하는 checkbox의 기본동작을 막아 수정을 하지 못 하게 함.
+    disabled: isDone,  
+  });
+
+  const $editInput = new Input({
+    ... //
+    readOnly: isDone, // 👉🏻 완료된 Todo의 input은 read-only 활성화
+  });
+  $editInput.classList.add("todo-title");
+  $editInput.classList.toggle("edit-mode", isEditMode);
+
+  ... //
 }
+
 ```
 
 # 4. Todo 수정 및 체크박스 UI
@@ -389,6 +422,78 @@ export default function TitleSection({
 }
 
 ```
+
+# 5. Todo 전체 완료 및 삭제
+`App.js`에서 관리하는 state 변경을 위해 App.js 내부에서 선언한 함수를 callback으로 넘겨 event를 trigger하는 요소와 묶어서 구현했습니다.
+
+![untitle](https://github.com/user-attachments/assets/bae1ed90-1c0f-4855-898c-60b3f1ab3565)
+
+```javascript
+// App.js
+this.completeAllTodos = () => {
+ this.setState({
+   todos: this.state.todos.map((todo) => ({ ...todo, status: "DONE" })),
+ });
+};
+
+this.deleteAllTodos = () => {
+ this.setState({ todos: [] });
+};
+
+// TodoControlPanel.js
+const $bulkWrapper = document.createElement("div");
+
+const $completeAllButton = new Button({
+ variant: "fill",
+ onClick: completeAllTodos,
+ text: "전체 완료",
+});
+$bulkWrapper.appendChild($completeAllButton);
+const $deleteAllButton = new Button({
+ variant: "fill",
+ onClick: deleteAllTodos,
+ text: "전체 삭제",
+});
+```
+
+# 6. Todo 진행 정보(할 일 개수 / 전체 개수)
+Todo의 진행 정보를 `할 일 개수 / 전체 개수`로 나타내며 시각적으로 더 잘 표현하기 위해 `circular progress bar` UI를 구현했습니다.
+
+![untitle](https://github.com/user-attachments/assets/f2bfd8e9-dced-4c27-a21d-6cddee254c2b)
+
+
+```javascript
+// Header.js
+export default function Header({
+  totalTodosCount = 0,
+  completedTodosCount = 0,
+}) {
+  ... //
+  const progressPercentage =
+    totalTodosCount > 0 ? (completedTodosCount / totalTodosCount) * 100 : 0;
+  const circumference = 2 * Math.PI * 45; // 원 둘레
+  const strokeDasharray = circumference;
+  const strokeDashoffset =
+    circumference - (progressPercentage / 100) * circumference;
+
+  // r은 size 100px보다 작게 설정하여 깔끔.
+  $circularProgress.innerHTML = `
+    <svg class="progress-svg" viewBox="0 0 100 100">
+      <circle class="progress-bg" cx="50" cy="50" r="45"/>
+      <circle class="progress-fill" cx="50" cy="50" r="45" 
+        stroke-dasharray="${strokeDasharray}" stroke-dashoffset="${strokeDashoffset}" 
+        transform="rotate(-90 50 50)"/>
+    </svg>
+    <div class="progress-text">${completedTodosCount} / ${totalTodosCount}</div>
+  `;
+
+  ... //
+}
+```
+
+# 7. 웹 접근성을 통한 수정
+![untitle](https://github.com/user-attachments/assets/5b555ef2-dead-4137-8767-586a07d90ca3)
+
 
 
 
