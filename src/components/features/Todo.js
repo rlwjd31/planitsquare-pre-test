@@ -4,6 +4,7 @@ import TitleSection from "./TodoTitleSection.js";
 import TodoDescription from "./TodoDescription.js";
 import TodoInfoSection from "./TodoInfoSection.js";
 import TodoMetaSection from "./TodoMetaSection.js";
+import { isEmptyString } from "../../utils/isEmptyString.js";
 
 /**
  * @param {Object} props
@@ -56,13 +57,22 @@ export default function Todo({
       title: this.state.title,
       isDone: status === "DONE",
       onBlurTitle: (e) => {
+        if (isEmptyString(e.target.value)) return;
         this.setState({ ...this.state, title: e.target.value });
       },
-      onEnterTitle: (e) =>
+      onEnterTitle: (e) => {
+        const { value } = e.target;
+        if (isEmptyString(value) || this.state.title === "") {
+          alert("할 일을 입력해주세요");
+          e.target.focus();
+          return;
+        }
+
         updateTodo(id, {
-          title: e.target.value,
+          title: value,
           priority: this.state.priority,
-        }),
+        });
+      },
       onChangeCheckbox: () =>
         this.setState({ ...this.state, isEditMode: !this.state.isEditMode }),
       toggleTodoStatus,
@@ -107,6 +117,8 @@ export default function Todo({
     $iconWrapper.appendChild($deleteButtonIcon);
 
     $todoContainer.appendChild($iconWrapper);
+
+    console.table(this.state);
   };
 
   this.render();
