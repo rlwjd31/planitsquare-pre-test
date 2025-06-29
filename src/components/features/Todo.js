@@ -42,7 +42,6 @@ export default function Todo({
 
   this.state = {
     isEditMode: false,
-    priority: priority,
   };
 
   this.setState = (newState) => {
@@ -75,7 +74,7 @@ export default function Todo({
 
     // todo title section
     const $titleSection = new TitleSection({
-      title: title,
+      title,
       todoId: id,
       isDone: status === "DONE",
       onEnterTitle: (e) => {
@@ -89,7 +88,6 @@ export default function Todo({
 
         updateTodo(id, {
           title: value,
-          priority: this.state.priority,
         });
       },
       onChangeCheckbox: () =>
@@ -112,13 +110,7 @@ export default function Todo({
     const $metaSection = new TodoMetaSection({
       isEditMode: this.state.isEditMode,
       status,
-      priority: this.state.priority,
-      onChangePriority: (e) => {
-        this.setState({
-          ...this.state,
-          priority: e.target.value,
-        });
-      },
+      priority,
     });
     // todo 변경, 삭제를 위한 icon(delete, pencil)
     const $iconWrapper = document.createElement("div");

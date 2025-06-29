@@ -1,3 +1,4 @@
+import { TODO_FORM_FIELD } from "../../constants/todoFormField.js";
 import Badge from "../ui/Badge.js";
 
 /**
@@ -6,14 +7,12 @@ import Badge from "../ui/Badge.js";
  * @param {'DONE' | 'TODO'} props.status Todo의 현재 상태
  * @param {'HIGH' | 'MEDIUM' | 'LOW'} props.priority Todo의 우선순위
  * @param {boolean} props.isEditMode 수정 모드 여부
- * @param {(event: Event) => void} props.onChangePriority 우선순위 변경 이벤트 핸들러
  * @returns {HTMLDivElement} Todo 메타 정보를 담은 div 엘리먼트
  */
 export default function TodoMetaSection({
   status,
   priority,
   isEditMode,
-  onChangePriority,
 }) {
   const $metaWrapper = document.createElement("div");
   $metaWrapper.className = "todo-meta-wrapper";
@@ -22,17 +21,15 @@ export default function TodoMetaSection({
   // edit mode일 때 priority select, 아닐 때 badge
   let $priority;
   if (isEditMode) {
-    // @FIXME: select는 기본으로 포커스 요소인데 포커스 되지 않음 이슈
     $priority = document.createElement("select");
-    $priority.name = "todo-priority";
+    $priority.value = priority;
+    $priority.name = TODO_FORM_FIELD.PRIORITY;
     ["HIGH", "MEDIUM", "LOW"].forEach((value) => {
       const $option = document.createElement("option");
       $option.value = value;
       $option.textContent = value;
-      if (priority === value) $option.selected = true;
       $priority.appendChild($option);
     });
-    $priority.addEventListener("change", onChangePriority);
   } else {
     $priority = new Badge({ text: priority });
   }
