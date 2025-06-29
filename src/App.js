@@ -1,5 +1,5 @@
 import Header from "./components/layouts/Header.js";
-import Todo from "./components/features/Todo.js";
+import Todos from "./components/features/Todos.js";
 import TodoControlPanel from "./components/features/TodoControlPanel.js";
 import { todos as mockTodos } from "./mock/todos.js";
 import { getFromStorage, saveAtStorage } from "./utils/statePersistence.js";
@@ -131,18 +131,13 @@ export default function App() {
     this.$main.appendChild($todoControlPanel);
 
     // todo 리스트 렌더링
-    const $todoList = document.createElement("div");
-    $todoList.className = "todo-list";
-    this.state.todos.forEach((todo) => {
-      $todoList.appendChild(
-        new Todo({
-          todo,
-          toggleTodoStatus: this.toggleTodoStatus,
-          deleteTodo: this.deleteTodo,
-          updateTodo: this.updateTodo,
-        })
-      );
+    const $todoList = new Todos({
+      todos: this.state.todos,
+      toggleTodoStatus: this.toggleTodoStatus,
+      deleteTodo: this.deleteTodo,
+      updateTodo: this.updateTodo,
     });
+
     this.$main.appendChild($todoList);
 
     // app에 append
