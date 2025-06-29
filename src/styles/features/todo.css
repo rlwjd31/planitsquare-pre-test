@@ -10,18 +10,6 @@
   gap: 1rem;
 }
 
-.todo-title-wrapper .todo-title {
-  /* checkbox와 가운데가 일치하지 않아 현재 기준으로 아래 2px조정 함 */
-  position: relative;
-  top: 2px;
-  /*  */
-
-  color: var(--text);
-  font-size: 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
 .todo-description {
   margin-top: 1rem;
   padding-left: var(--todo-padding-left);

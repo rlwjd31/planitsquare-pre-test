@@ -1,0 +1,18 @@
+.todo-checkbox:has(:disabled)::after,
+.todo-checkbox:has(:disabled)::before {
+  background-color: transparent;
+}
+
+.todo-title:not(.edit-mode),
+.todo-title:not(.edit-mode):focus,
+.todo-title:not(.edit-mode):active {
+  background-color: transparent;
+  border-color: transparent;
+  font-size: 1.25rem;
+  font-weight: 600;
+  outline: none;
+  box-shadow: none;
+  /* 마우스 클릭 글자의 cursor가 나타나므로 제거하는 style */
+  caret-color: transparent;
+  cursor: pointer;
+}
