@@ -79,6 +79,16 @@ export default function App() {
     });
   };
 
+  this.completeAllTodos = () => {
+    this.setState({
+      todos: this.state.todos.map((todo) => ({ ...todo, status: "DONE" })),
+    });
+  };
+
+  this.deleteAllTodos = () => {
+    this.setState({ todos: [] });
+  };
+
   this.render = () => {
     // 🐛 bug report commit id => 2cf4647
     // this.$main이 다시 생성되지 않도록 함수의 상단으로 빼고 render함수 내부에서 참조하여 DOM을 지우고 다시 그림.
@@ -99,6 +109,8 @@ export default function App() {
     // add todo & filter(todo control panel)
     const $todoControlPanel = new TodoControlPanel({
       addTodo: this.addTodo,
+      completeAllTodos: this.completeAllTodos,
+      deleteAllTodos: this.deleteAllTodos,
     });
     this.$main.appendChild($todoControlPanel);
 

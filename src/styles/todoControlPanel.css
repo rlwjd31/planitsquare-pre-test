@@ -1,0 +1,36 @@
+.todo-control-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  align-self: flex-start;
+}
+
+.todo-control-panel .add-todo-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bulk-wrapper {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 1rem;
+}
+
+.bulk-wrapper .btn:nth-child(2) {
+  background-color: var(--danger);
+}
+
+.bulk-wrapper .btn:nth-child(2):hover {
+  background-color: color-mix(in srgb, var(--danger) 80%, transparent);
+}
+
+.bulk-wrapper .btn:nth-child(2):focus {
+  outline: none;
+  border-color: white;
+  box-shadow: var(--focus-ring-danger);
+}
