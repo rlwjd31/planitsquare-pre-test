@@ -1,3 +1,4 @@
+import { TODO_FORM_FIELD } from "../../constants/todoFormField.js";
 import Checkbox from "../ui/Checkbox.js";
 import Input from "../ui/Input.js";
 
@@ -43,6 +44,7 @@ export default function TitleSection({
     onEnter: onEnterTitle,
     placeholder: "할 일을 입력해주세요",
     readOnly: isDone,
+    name: TODO_FORM_FIELD.TITLE,
   });
   $editInput.classList.add("todo-title");
   $editInput.classList.toggle("edit-mode", isEditMode);
