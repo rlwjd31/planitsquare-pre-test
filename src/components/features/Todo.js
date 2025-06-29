@@ -81,7 +81,7 @@ export default function Todo({
       onEnterTitle: (e) => {
         const { value } = e.target;
 
-        if (isEmptyString(value) || this.state.title === "") {
+        if (isEmptyString(value)) {
           alert("할 일을 입력해주세요");
           e.target.focus();
           return;
@@ -98,7 +98,10 @@ export default function Todo({
       isEditMode: this.state.isEditMode,
     });
     // todo description section
-    const $descriptionSection = new TodoDescription({ description });
+    const $descriptionSection = new TodoDescription({
+      description,
+      isEditMode: this.state.isEditMode,
+    });
     // todo info section
     const $infoSection = new TodoInfoSection({
       isEditMode: this.state.isEditMode,
