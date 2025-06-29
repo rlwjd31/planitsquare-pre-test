@@ -5,6 +5,7 @@ import TodoDescription from "./TodoDescription.js";
 import TodoInfoSection from "./TodoInfoSection.js";
 import TodoMetaSection from "./TodoMetaSection.js";
 import { isEmptyString } from "../../utils/isEmptyString.js";
+import { TODO_FORM_FIELD } from "../../constants/todoFormField.js";
 
 /**
  * @param {Object} props
@@ -48,6 +49,25 @@ export default function Todo({
   this.setState = (newState) => {
     this.state = newState;
     this.render();
+  };
+
+  this.submitForm = (e) => {
+    e.preventDefault();
+    const formData = new FormData($form);
+    const data = {
+      title: formData.get(TODO_FORM_FIELD.TITLE),
+      description: formData.get(TODO_FORM_FIELD.DESCRIPTION),
+      startDate: formData.get(TODO_FORM_FIELD.START_DATE),
+      endDate: formData.get(TODO_FORM_FIELD.END_DATE),
+      relatedLink: formData.get(TODO_FORM_FIELD.RELATED_LINK),
+      priority: formData.get(TODO_FORM_FIELD.PRIORITY),
+    };
+    console.log(data); // 추출된 값 확인
+    // 이후 updateTodo 등 원하는 로직 실행
+  };
+
+  this.init = () => {
+    $form.addEventListener("submit", this.submitForm);
   };
 
   this.render = () => {
@@ -129,10 +149,17 @@ export default function Todo({
     );
 
     if (this.state.isEditMode) {
+      // ! button test
+
+      const $submitButton = document.createElement("button");
+      $submitButton.textContent = "Submit";
+      $form.appendChild($submitButton);
+      /// -------------------------------
       $todoContainer.appendChild($form);
     }
   };
 
+  this.init();
   this.render();
 
   return new Card({ children: [$todoContainer], status });
